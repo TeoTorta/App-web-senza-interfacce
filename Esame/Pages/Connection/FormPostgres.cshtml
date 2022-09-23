@@ -1,0 +1,54 @@
+﻿@page
+@model Esame.Pages.Connection.FormPostgresModel
+@{
+    ViewData["Title"] = "Form Postgres";
+}
+@section Scripts {
+<script> src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
+
+<script>
+   $(document).ready(function () {
+      let msg = $('#StatusMessage').val();
+      if(msg.length > 0) {
+          swal.fire(msg);
+      }
+   }
+</script>
+}
+<h1>Form Postgres</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Host" class="control-label"></label>
+                <input asp-for="Input.Host" class="form-control" />
+                <span asp-validation-for="Input.Host" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Database" class="control-label"></label>
+                <input asp-for="Input.Database" class="form-control" />
+                <span asp-validation-for="Input.Database" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.UserId" class="control-label"></label>
+                <input asp-for="Input.UserId" class="form-control" />
+                <span asp-validation-for="Input.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password" class="control-label"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+                <div style="width:500px;">
+                    <input asp-for="StatusMessage" class="text-danger" style="border: none; background-color: transparent; width:500px;" />
+                </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Apri Connessione" class="btn btn-primary" />
+            </div>
+        </form>
+           
+    </div>
+</div>

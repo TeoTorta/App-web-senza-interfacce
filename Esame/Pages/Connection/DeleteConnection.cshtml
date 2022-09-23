@@ -1,0 +1,78 @@
+﻿@page
+@model Esame.Pages.Connection.DeleteConnectionModel
+@{
+}
+
+<div class="text-center">
+    <h2>Tabella Connessioni Attive Postgres</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostgresTable[0].Host)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostgresTable[0].Database)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostgresTable[0].UserId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostgresTable[0].Password)
+                </th>
+                 
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PostgresTable)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Host)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Database)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                     <td>
+                        <a asp-page="./DeletePostgres" asp-route-id="@item.Id">Delete</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <h2>Tabella Connessioni Attive SQLite</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SqliteTable[0].Path)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SqliteTable)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Path)
+                    </td>
+                    <td>
+                        <a asp-page="./DeleteSqlite" asp-route-id="@item.Id">Delete</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

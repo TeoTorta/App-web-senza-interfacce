@@ -1,0 +1,24 @@
+﻿@page
+@model Esame.Pages.NewConnectionModel
+@{
+}
+<div class="text-left">
+    <h1>Selezionare il DB Provider:</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div class ="form-group">
+                    <input type="radio" value="SQLite" asp-for="Input.provider">
+                    <label for="SQLite">SQLite</label>
+                </div>
+                <div class="form-group">
+                    <input type="radio" value="PostgreSQL" asp-for="Input.provider">
+                    <label for="PostgreSQL">PostgreSQL</label><br>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Avanti" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
