@@ -48,7 +48,6 @@ namespace Esame.Pages.Connection
             Connect = @"Data Source="+ Input.Path;
             //Console.WriteLine($"Path:{Input.Path}");
 
-            //Al posto di connection mettere Input.Connection! CAPIRE COME SALVARE A DB SQLITECONNECTION
             connection = TestConnectionString(Input.Path, Connect);
             
            
@@ -80,7 +79,7 @@ namespace Esame.Pages.Connection
              }
             else
             {
-                 StatusMessage = "ConnectionString non valida!";
+                StatusMessage = "ConnectionString non valida!";
                 return Page();
 
             }

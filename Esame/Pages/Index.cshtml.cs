@@ -2,6 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,17 +14,100 @@ namespace Esame.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ConnectionContext _context;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public DataTable PostgresTable { get; set; } = new DataTable();
+
+        public DataTable SqliteTable { get; set; } = new DataTable();
+
+        public IndexModel(ConnectionContext context)
         {
-            _logger = logger;
+            _context = context;
+            PostgresTable.Columns.Add("Id", typeof(long));
+            PostgresTable.Columns.Add("Database",typeof(string));
+            PostgresTable.Columns.Add("Tabelle", typeof(IList<string>));
+
+            SqliteTable.Columns.Add("Id", typeof(long));
+            SqliteTable.Columns.Add("Database", typeof(string));
+            SqliteTable.Columns.Add("Tabelle", typeof(IList<string>));
         }
 
-        public void OnGet()
-        {
+        public IList<PostgresOpenConnection> PostgresList { get; set; }
+        public IList<SqliteOpenConnection> SqliteList { get; set; }
 
+        
+
+        public async Task OnGetAsync()
+        {
+            PostgresList = await _context.PostgresOpenConnections.ToListAsync();
+            if (PostgresList.Count > 0)
+            {
+                //GetTabellePostgres();
+            }
+            SqliteList = await _context.SqliteOpenConnections.ToListAsync();
+            if (SqliteList.Count > 0)
+            {
+                GetTabelleSqlite();
+            }
+
+            foreach (DataRow r in SqliteTable.Rows)
+            {
+                Console.WriteLine("Id: {0}\t Database : {1} \t", r[0], r[1]);
+
+                //Console.WriteLine(r[2].GetType());
+                
+                IList<string> a = (IList<string>)r[2];
+                foreach(var item in a)
+                {
+                    Console.WriteLine(item);
+                }
+                
+             
+            }
         }
+
+        public void GetTabellePostgres()
+        {
+            for (int i = 0; i < PostgresList.Count; i++)
+            {
+                    NpgsqlConnection o = JsonConvert.DeserializeObject<NpgsqlConnection>(PostgresList[i].Connection);
+                    o.Open();
+                    IList<String> tabelle = new List<String>();
+
+                    var sql = "SELECT name FROM sqlite_master WHERE type='table'";
+                    using var cmd = new NpgsqlCommand(sql, o);
+                    using NpgsqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        //Console.WriteLine("Tabella: " + rdr.GetString(0));
+                        tabelle.Add(rdr.GetString(0));
+                    }
+                    SqliteTable.Rows.Add(PostgresList[i].Id, o.DataSource, tabelle);
+            }
+        }
+
+        public void GetTabelleSqlite()
+        {
+            for (int i = 0; i < SqliteList.Count; i++)
+            {
+                SqliteConnection o = JsonConvert.DeserializeObject<SqliteConnection>(SqliteList[i].Connection);
+                
+                o.Open();
+                IList<String> tabelle = new List<String>();
+                
+                var sql = "SELECT name FROM sqlite_master WHERE type='table'";
+                using var cmd = new SqliteCommand(sql, o);
+                using SqliteDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    //Console.WriteLine("Tabella: " + rdr.GetString(0));
+                    tabelle.Add(rdr.GetString(0));
+                }
+                SqliteTable.Rows.Add(SqliteList[i].Id, o.DataSource, tabelle);
+            }
+        }
+
+
 
     }
 }

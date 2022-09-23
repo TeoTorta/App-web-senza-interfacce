@@ -47,7 +47,7 @@ namespace Esame.Pages.Connection
             if (Input != null)
             {
                 SqliteConnection o = JsonConvert.DeserializeObject<SqliteConnection>(Input.Connection);
-                //Console.WriteLine(o.State);
+                Console.WriteLine(o.State);
                 o.Close();
                 _context.SqliteOpenConnections.Remove(Input);
                 await _context.SaveChangesAsync();

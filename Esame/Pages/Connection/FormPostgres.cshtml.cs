@@ -83,7 +83,6 @@ namespace Esame.Pages.Connection
             try
             {
                 var conn = new NpgsqlConnection(connectionString);
-
                 conn.Open();
                 return conn;
                     /*
