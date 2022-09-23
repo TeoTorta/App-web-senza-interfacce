@@ -1,6 +1,9 @@
 #nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.Sqlite;
+using Newtonsoft.Json;
+using Npgsql;
 
 namespace Esame.Pages.Connection
 {
@@ -43,6 +46,8 @@ namespace Esame.Pages.Connection
 
             if (Input != null)
             {
+                NpgsqlConnection o = JsonConvert.DeserializeObject<NpgsqlConnection>(Input.Connection);
+                o.Close();
                 _context.PostgresOpenConnections.Remove(Input);
                 await _context.SaveChangesAsync();
             }

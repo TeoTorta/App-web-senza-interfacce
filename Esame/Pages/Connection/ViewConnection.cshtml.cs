@@ -47,6 +47,7 @@ namespace Esame.Pages.Connection
             {
                 SqliteConnection o = JsonConvert.DeserializeObject<SqliteConnection>(SqliteTable[i].Connection);
                 IList<String> tabelle = new List<String>();
+                
                 o.Open();
 
 

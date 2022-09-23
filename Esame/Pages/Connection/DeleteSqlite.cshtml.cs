@@ -1,6 +1,9 @@
 #nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.Sqlite;
+using Newtonsoft.Json;
+using Npgsql;
 
 namespace Esame.Pages.Connection
 {
@@ -43,6 +46,9 @@ namespace Esame.Pages.Connection
 
             if (Input != null)
             {
+                SqliteConnection o = JsonConvert.DeserializeObject<SqliteConnection>(Input.Connection);
+                //Console.WriteLine(o.State);
+                o.Close();
                 _context.SqliteOpenConnections.Remove(Input);
                 await _context.SaveChangesAsync();
             }
