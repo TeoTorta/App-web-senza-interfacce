@@ -1,12 +1,47 @@
 ﻿@page
-@model IndexModel
+@model Esame.Pages.Connection.ViewConnectionModel
+<!-- chiocciola m odel IndexModel -->
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="sidebar">
+    <table>
+        <thead>
+            <tr>
+                <th class="cell">Connessioni attive Postgres</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PostgresTable)
+            {
+                <tr>
+                    <td class="cell">
+                        @Html.DisplayFor(modelItem => item.Host)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="line-2"></div>
+    <div class="line-1"></div>
+    <div class="line-2"></div>
+    <table>
+        <thead>
+            <tr>
+                <th class="cell">Connessioni attive SQLite</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SqliteTable)
+            {
+                <tr>
+                    <td class="cell">
+                        @Html.DisplayFor(modelItem => item.Path)
+                    </td>
 
-
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

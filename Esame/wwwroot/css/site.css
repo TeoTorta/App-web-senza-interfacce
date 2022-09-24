@@ -1,20 +1,20 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 
@@ -28,17 +28,22 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
+
 .sidebar {
     position: fixed;
-    left: 0;
-    top: 0;
+    left: 20px;
+    top: 65px;
+    bottom: 20px;
     height: 100%;
-    width: 78px;
-    background: #11101D;
+    width: 250px;
+    height: 90%;
+    background-color: lightgray;
     padding: 6px 14px;
     z-index: 99;
     transition: all 0.5s ease;
+    border-radius: 10px;
 }
+
 
     .sidebar.open {
         width: 250px;
@@ -305,4 +310,18 @@ body {
     .sidebar li .tooltip {
         display: none;
     }
+}
+
+.cell {
+    height: 30px;
+}
+
+.line-1 {
+    height: 1px;
+    background: black;
+}
+
+.line-2 {
+    height: 20px;
+    background: none;
 }
