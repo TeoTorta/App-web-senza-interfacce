@@ -46,17 +46,7 @@ namespace Esame.Pages.Connection
             }
             TableColumns(Input, name);
             ViewData["PostgresTable"] = PostgresTable;
-            /*
-            foreach (DataRow myRow in PostgresTable.Rows)
-            {
-                foreach (DataColumn myColumn in PostgresTable.Columns)
-                {
-                    Console.Write(myRow[myColumn] + "\t");
-                }
-                Console.WriteLine();
-            }
-            */
-            
+
             foreach (DataRow r in PostgresTable.Rows)
             {
                 contatore++;
@@ -64,9 +54,9 @@ namespace Esame.Pages.Connection
                 Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
             }
             TableValue(Input, name);
+            ViewData["Dati"] = Dati;
 
             
-
             foreach (DataRow myRow in Dati.Rows)
             {
                 foreach (DataColumn myColumn in Dati.Columns)

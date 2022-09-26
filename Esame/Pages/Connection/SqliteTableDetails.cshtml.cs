@@ -55,7 +55,8 @@ namespace Esame.Pages.Connection
                 Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
             }
             TableValue(Input, name);
-           
+            ViewData["Dati"] = Dati;
+
             foreach (DataRow myRow in Dati.Rows)
             {
                 foreach (DataColumn myColumn in Dati.Columns)
@@ -65,10 +66,6 @@ namespace Esame.Pages.Connection
                 Console.WriteLine();
             }
             
-
-
-
-
             return Page();
         }
 
@@ -116,7 +113,6 @@ namespace Esame.Pages.Connection
             }
             */
             SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(cmd);
-
             myAdapter.Fill(Dati);
 
 
