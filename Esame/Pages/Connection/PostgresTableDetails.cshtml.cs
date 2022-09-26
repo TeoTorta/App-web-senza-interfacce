@@ -5,6 +5,7 @@ using Microsoft.Data.Sqlite;
 using Npgsql;
 using System.Data.SQLite;
 using System.Data;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Esame.Pages.Connection
 {
@@ -27,6 +28,8 @@ namespace Esame.Pages.Connection
 
         [BindProperty]
         public PostgresOpenConnection Input { get; set; }
+
+        public int contatore { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
@@ -56,12 +59,13 @@ namespace Esame.Pages.Connection
             
             foreach (DataRow r in PostgresTable.Rows)
             {
+                contatore++;
                 Dati.Columns.Add(r[0].ToString());
                 Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
             }
-            
-            
             TableValue(Input, name);
+
+            
 
             foreach (DataRow myRow in Dati.Rows)
             {
@@ -114,14 +118,8 @@ namespace Esame.Pages.Connection
             
             string query = "SELECT * FROM \""+name+"\" ";
             NpgsqlCommand cmd = new NpgsqlCommand(query, o);
-            
-            var dr = cmd.ExecuteReader();
-            while (dr.Read())//loop through the various columns and their info
-            {
-                
-                Console.WriteLine(dr[0].ToString()+" "+ dr[1].ToString());
-                
-            }
+            NpgsqlDataAdapter myAdapter = new NpgsqlDataAdapter(cmd);
+            myAdapter.Fill(Dati);
 
 
 
