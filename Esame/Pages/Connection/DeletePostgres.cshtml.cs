@@ -46,8 +46,11 @@ namespace Esame.Pages.Connection
 
             if (Input != null)
             {
-                NpgsqlConnection o = JsonConvert.DeserializeObject<NpgsqlConnection>(Input.Connection);
+                /*
+                string connectionString = $"Host={Input.Host}; Database={>Input.Database}; User ID={Input.UserId}; Password={Input.Password};";
+                NpgsqlConnection o = new NpgsqlConnection(connectionString);
                 o.Close();
+                */
                 _context.PostgresOpenConnections.Remove(Input);
                 await _context.SaveChangesAsync();
             }

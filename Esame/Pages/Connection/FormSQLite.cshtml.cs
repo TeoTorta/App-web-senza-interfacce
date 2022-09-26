@@ -48,15 +48,10 @@ namespace Esame.Pages.Connection
             Connect = @"Data Source="+ Input.Path;
             //Console.WriteLine($"Path:{Input.Path}");
 
-            connection = TestConnectionString(Input.Path, Connect);
-            
-           
-            //SqliteConnection o = JsonConvert.DeserializeObject<SqliteConnection>(Input.Connection);
-
             
 
             
-            if (connection!=null)
+            if (TestConnectionString(Input.Path, Connect))
             {
                 
                 for (int i = 0; i < SqliteTable.Count; i++)
@@ -69,12 +64,8 @@ namespace Esame.Pages.Connection
                     }
                 }
 
-                //Console.WriteLine("DATABASE FORM== " + connection.Database);
-                //Console.WriteLine("STATO FORM== " + connection.State);
-                Input.Connection = JsonConvert.SerializeObject(connection);
                 _context.SqliteOpenConnections.Add(Input);
                 await _context.SaveChangesAsync();
-                
                 return RedirectToPage("../Index");
              }
             else
@@ -86,7 +77,7 @@ namespace Esame.Pages.Connection
 
         }
         
-        static SqliteConnection TestConnectionString(string path,string connectionString)
+        static bool TestConnectionString(string path,string connectionString)
         {
 
                 try
@@ -97,12 +88,12 @@ namespace Esame.Pages.Connection
                     if (!System.IO.File.Exists(path))
                     {
                         Console.WriteLine("Il db non esiste");
-                        return null;
+                        return false;
                     }
                     
                     
                     conn.Open();
-                    return conn;
+                    return true;
 
                     /*
                     var sql = "SELECT name FROM sqlite_master WHERE type='table'";
@@ -120,7 +111,7 @@ namespace Esame.Pages.Connection
                 catch(Exception ex)
                 {
                     Console.WriteLine(ex.Message.ToString());
-                    return null;
+                    return false;
                 }
                     
         }

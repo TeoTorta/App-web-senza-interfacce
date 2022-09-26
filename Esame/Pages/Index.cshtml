@@ -1,47 +1,50 @@
 ﻿@page
-@model Esame.Pages.Connection.ViewConnectionModel
-<!-- chiocciola m odel IndexModel -->
+@model Esame.Pages.IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
-
 <div class="sidebar">
-    <table>
-        <thead>
-            <tr>
-                <th class="cell">Connessioni attive Postgres</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.PostgresTable)
-            {
-                <tr>
-                    <td class="cell">
-                        @Html.DisplayFor(modelItem => item.Host)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
+    <h3 class="cell">Connessioni attive Postgres</h3>
+
+    @if (ViewData["PostgresTable"] != null)
+    {
+        var dt = ViewData["PostgresTable"] as System.Data.DataTable;
+
+        foreach (System.Data.DataRow dr in dt.Rows)
+        {
+            @dr[1]<span class="arrow_carrot-down"></span>
+            <ul class="dropdown">
+                @foreach (var item in @dr[2] as IList<string>)
+                {
+                    <a asp-page="/Connection/PostgresTableDetails" asp-route-name="@item" asp-route-id="@dr[0]"> <li>@item</li></a>
+
+                }
+            </ul>
+        }
+    }
     <div class="line-2"></div>
     <div class="line-1"></div>
     <div class="line-2"></div>
-    <table>
-        <thead>
-            <tr>
-                <th class="cell">Connessioni attive SQLite</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.SqliteTable)
-            {
-                <tr>
-                    <td class="cell">
-                        @Html.DisplayFor(modelItem => item.Path)
-                    </td>
+   
+    <h3 class="cell">Connessioni attive SQLite</h3>
+    
+    @if (ViewData["SqliteTable"] != null)
+    {
+        var dt = ViewData["SqliteTable"] as System.Data.DataTable;
 
-                </tr>
-            }
-        </tbody>
-    </table>
+        foreach (System.Data.DataRow dr in dt.Rows)
+        {
+            @dr[1]<span class="arrow_carrot-down"></span>       
+            <ul class="dropdown">
+                @foreach (var item in @dr[2] as IList<string>)
+                {
+                    <a asp-page="/Connection/SqliteTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">
+                    <li> @item</li>
+                    </a>
+                    
+                }
+            </ul>
+        }
+    }
 </div>

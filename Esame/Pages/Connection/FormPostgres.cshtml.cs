@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Npgsql;
 using System;
 
@@ -25,6 +26,8 @@ namespace Esame.Pages.Connection
 
         public IList<PostgresOpenConnection> PostgresTable { get; set; }
 
+        
+       
         public NpgsqlConnection connection { get; set; }
 
 
@@ -49,10 +52,9 @@ namespace Esame.Pages.Connection
             PostgresTable = await _context.PostgresOpenConnections.ToListAsync();
             //Console.WriteLine($"Host:{Input.Host}, database:{Input.Database}, ID:{Input.UserId}, Password:{Input.Password}");
             Connect = $"Host={Input.Host}; Database={Input.Database}; User ID={Input.UserId}; Password={Input.Password};";
+            
 
-            connection = TestConnectionString(Connect);
-
-            if (connection != null)
+            if (TestConnectionString(Connect))
             {
                 for (int i = 0; i < PostgresTable.Count; i++)
                 {
@@ -63,9 +65,9 @@ namespace Esame.Pages.Connection
                         return Page();
                     }
                 }
+
                 
-                
-                Input.Connection = JsonConvert.SerializeObject(connection);
+                //Input.Connection = JsonConvert.SerializeObject(connection);
                 _context.PostgresOpenConnections.Add(Input);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Index");
@@ -78,13 +80,16 @@ namespace Esame.Pages.Connection
             
         }
 
-        static NpgsqlConnection TestConnectionString(string connectionString)
+        static bool TestConnectionString(string connectionString)
         {
+
+            var conn = new NpgsqlConnection(connectionString);
             try
             {
-                var conn = new NpgsqlConnection(connectionString);
+                
                 conn.Open();
-                return conn;
+                
+                return true;
                     /*
                     var sql = "SELECT version()";
                     using var cmd = new NpgsqlCommand(sql, conn);
@@ -95,7 +100,7 @@ namespace Esame.Pages.Connection
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message.ToString());
-                    return null;
+                    return false;
                 }
 
             }

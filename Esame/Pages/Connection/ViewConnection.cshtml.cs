@@ -36,16 +36,17 @@ namespace Esame.Pages.Connection
                 }
                 */
 
-                QueryTest();
+                //QueryTest();
             }
         }
 
 
         public void QueryTest()
         {
-            for (int i = 0; i < SqliteTable.Count; i++)
+            for (int i = 1; i < SqliteTable.Count; i++)
             {
-                SqliteConnection o = JsonConvert.DeserializeObject<SqliteConnection>(SqliteTable[i].Connection);
+                SqliteConnection o = new SqliteConnection(SqliteTable[i].Path);
+                o.Open();
                 IList<String> tabelle = new List<String>();
                 
                 o.Open();
