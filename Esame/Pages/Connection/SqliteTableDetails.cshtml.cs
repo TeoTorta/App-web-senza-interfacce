@@ -48,14 +48,13 @@ namespace Esame.Pages.Connection
             }
             TableColumns(Input, name);
             ViewData["SqliteTable"] = SqliteTable;
-            int i = 0;
+
             foreach (DataRow r in SqliteTable.Rows)
             {
-                i++;
                 Dati.Columns.Add(r[0].ToString());
                 Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
             }
-            TableValue(Input, name,i);
+            TableValue(Input, name);
            
             foreach (DataRow myRow in Dati.Rows)
             {
@@ -96,7 +95,7 @@ namespace Esame.Pages.Connection
             }
         }
 
-        public void TableValue(SqliteOpenConnection Input, string name,int i)
+        public void TableValue(SqliteOpenConnection Input, string name)
         {
             string connectionString = $"Data Source={Input.Path}";
             SQLiteConnection o = new SQLiteConnection(connectionString);
