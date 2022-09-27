@@ -3,39 +3,85 @@
 @{
 }
 
-<div>
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<div class="w3-sidebar w3-light-grey w3-bar-block" style="width:25%">
+    <h3 class="w3-bar-item">Connessioni attive</h3>
+    @if (ViewData["PostgresTable"] != null) {
+        var dt = ViewData["PostgresTable"] as System.Data.DataTable;
+
+        foreach (System.Data.DataRow dr in dt.Rows) {      
+                @foreach (var item in @dr[2] as IList<string>) {
+                <a class="w3-bar-item w3-button"  asp-page="/Connection/PostgresTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">@item</a>
+                }
+        }
+
+        @if (ViewData["SqliteTable"] != null)
+        {
+            var dt2 = ViewData["SqliteTable"] as System.Data.DataTable;
+
+            foreach (System.Data.DataRow dr in dt2.Rows)
+            {
+                
+                    @foreach (var item in @dr[2] as IList<string>)
+                    {
+                    <a class ="w3-bar-item w3-button" asp-page="/Connection/SqliteTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">@item</a>
+
+                    }
+                
+            }
+        }
+    }
+    </div>
+
+
+
+
+
+    <div style="margin-left:25%">
+
+        <div class="w3-container w3-teal">
+            <h1>My Page</h1>
+        </div>
+
     <table>
         <tr>
             @if (ViewData["SqliteTable"] != null)
             {
                 var dt = ViewData["SqliteTable"] as System.Data.DataTable;
-               
+
                 foreach (System.Data.DataRow dr in dt.Rows)
                 {
                     <th>@dr[0] @dr[1] (@dr[2], @dr[3])</th>
                 }
-           
+
             }
         </tr>
-        
+
         @if (ViewData["Dati"] != null)
         {
             var dt2 = ViewData["Dati"] as System.Data.DataTable;
-            
+
             foreach (System.Data.DataRow myRow in dt2.Rows)
             {
                 <tr>
-                @for(var i = 0; i < Model.contatore; i++) {
-                        
-                    <td>
-                        @myRow[i]
-                    </td>
-                }
+                    @for (var i = 0; i < Model.contatore; i++)
+                    {
+
+                        <td>
+                            @myRow[i]
+                        </td>
+                    }
                 </tr>
-                
+
             }
         }
-       
-        
+
+
     </table>
 </div>

@@ -3,25 +3,20 @@
 @{
 }
 
-
-<h1>Elimina</h1>
-
-<h3>Sei sicuro di volere eliminare questa connessione?</h3>
+<h2>Sei sicuro di volere eliminare questa connessione?</h2>
+<br />
 <div>
-    <h4>Connessione</h4>
-    <hr />
+    <h4>
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Input.Path)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Input.Path)
-        </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Input.Path)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Input.Path)</dd>
     </dl>
+    <br />
 
     <form method="post">
+        <input type="button" value="Go back" class="btn" style="border-color:black" onClick="history.go(-1);return true;" name="back">
         <input type="hidden" asp-for="Input.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./DeleteConnection">Ritorna alla pagina precedente</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
     </form>
+    </h4>
 </div>
