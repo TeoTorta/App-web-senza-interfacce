@@ -18,7 +18,6 @@
                 @foreach (var item in @dr[2] as IList<string>)
                 {
                     <a asp-page="/Connection/PostgresTableDetails" asp-route-name="@item" asp-route-id="@dr[0]"> <li>@item</li></a>
-
                 }
             </ul>
         }

@@ -31,6 +31,7 @@ namespace Esame.Pages.Connection
 
         [BindProperty]
         public SqliteOpenConnection Input { get; set; }
+        public int contatore = 0;
 
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
@@ -47,15 +48,16 @@ namespace Esame.Pages.Connection
             }
             TableColumns(Input, name);
             ViewData["SqliteTable"] = SqliteTable;
-
+            
             foreach (DataRow r in SqliteTable.Rows)
             {
                 Dati.Columns.Add(r[0].ToString());
                 Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
+                contatore++;
             }
             TableValue(Input, name);
             ViewData["Dati"] = Dati;
-
+            Console.WriteLine(Dati.Rows.Count);
             foreach (DataRow myRow in Dati.Rows)
             {
                 foreach (DataColumn myColumn in Dati.Columns)
