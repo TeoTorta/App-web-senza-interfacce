@@ -32,6 +32,7 @@ namespace Esame.Pages.Connection
         [BindProperty]
         public SqliteOpenConnection Input { get; set; }
         public int contatore = 0;
+        public List<string> nomi {get; set; }= new List<string>();
 
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
@@ -51,12 +52,13 @@ namespace Esame.Pages.Connection
             
             foreach (DataRow r in SqliteTable.Rows)
             {
-                Dati.Columns.Add(r[0].ToString());
-                Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
+
+                //Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
                 contatore++;
             }
             TableValue(Input, name);
             ViewData["Dati"] = Dati;
+            /*
             Console.WriteLine(Dati.Rows.Count);
             foreach (DataRow myRow in Dati.Rows)
             {
@@ -66,6 +68,7 @@ namespace Esame.Pages.Connection
                 }
                 Console.WriteLine();
             }
+            */
             
             return Page();
         }
@@ -100,21 +103,9 @@ namespace Esame.Pages.Connection
             o.Open();
             string query = "SELECT * FROM " + name;
             SQLiteCommand cmd = new SQLiteCommand(query,o);
-            /*
-            var dr2 = cmd2.ExecuteReader();
-            while (dr2.Read())//loop through the various columns and their info
-            {
-                IList<string> values = new List<string>();
-                for(int j=0;j<i;j++)
-                {
-                    values.Add(dr2.GetString(j));
-                }
-                
-                
-            }
-            */
             SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(cmd);
             myAdapter.Fill(Dati);
+           
 
 
         }
