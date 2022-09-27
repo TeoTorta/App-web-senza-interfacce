@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Esame.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    [Migration("20220921165956_Init")]
+    [Migration("20220927142833_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,10 +22,6 @@ namespace Esame.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Connection")
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Database")
                         .IsRequired()
@@ -57,10 +53,6 @@ namespace Esame.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Connection")
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Path")
                         .IsRequired()

@@ -17,8 +17,7 @@ namespace Esame.Migrations
                     Host = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Database = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     UserId = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Password = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Connection = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true)
+                    Password = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,8 +30,7 @@ namespace Esame.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Path = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Connection = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true)
+                    Path = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {

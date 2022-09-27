@@ -13,10 +13,7 @@ public class SqliteOpenConnectionConfiguration : IEntityTypeConfiguration<Sqlite
             .Property(p => p.Path)
             .HasMaxLength(100);
         
-        builder
-         .Property(p => p.Connection)
-         .HasMaxLength(1000);
-        
+     
 
     }
 }

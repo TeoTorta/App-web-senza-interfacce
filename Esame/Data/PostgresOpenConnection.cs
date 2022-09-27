@@ -21,7 +21,6 @@ public class PostgresOpenConnection
     [Required]
     public string Password { get; set; } = "";
     
-    public string Connection { get; set; } = default;
     
 
 }

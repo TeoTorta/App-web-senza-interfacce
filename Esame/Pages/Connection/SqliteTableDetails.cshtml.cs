@@ -1,5 +1,4 @@
 #nullable disable
-using Esame.Migrations;
 using Esame.Pages.Connection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

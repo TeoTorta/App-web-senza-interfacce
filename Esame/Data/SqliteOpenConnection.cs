@@ -11,7 +11,7 @@ public class SqliteOpenConnection
     [Required]
     public string Path { get; set; } = "";
     
-    public string Connection { get; set; } = default;
+
     
 
 }

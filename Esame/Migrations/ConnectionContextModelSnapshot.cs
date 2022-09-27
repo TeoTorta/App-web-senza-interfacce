@@ -21,10 +21,6 @@ namespace Esame.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Connection")
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Database")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -55,10 +51,6 @@ namespace Esame.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Connection")
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Path")
                         .IsRequired()

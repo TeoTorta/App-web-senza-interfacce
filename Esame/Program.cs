@@ -1,13 +1,10 @@
 
 using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
-
 
 var provider = DbProvider.SQLite;
 var connectionString = ConnectionStrings.Get(provider);
@@ -35,6 +32,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
