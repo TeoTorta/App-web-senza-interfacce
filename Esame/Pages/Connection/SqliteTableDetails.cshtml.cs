@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
 using System.Xml.Linq;
@@ -27,6 +28,7 @@ namespace Esame.Pages.Connection
             SqliteTable.Columns.Add("Name", typeof(string));
             SqliteTable.Columns.Add("Type", typeof(string));
             SqliteTable.Columns.Add("NullorNot", typeof(string));
+            SqliteTable.Columns.Add("PK", typeof(string));
         }
 
         [BindProperty]
@@ -85,15 +87,30 @@ namespace Esame.Pages.Connection
                 string NullorNot;
                 if (dr.GetString(3).Equals(0))
                 {
+
                     NullorNot = "NULL";
                 }
                 else
                 {
                     NullorNot = "NOT NULL";
                 }
+                int value = Int32.Parse(dr.GetString(5));
+                if (value==1)
+                {
+                    
+                    SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot,"Primary Key");
+                }
+                else
+                {
+                    
+                    SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot);
+                }
 
-                SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot);
             }
+            dr.Close();
+
+
+
         }
 
         public void TableValue(SqliteOpenConnection Input, string name)

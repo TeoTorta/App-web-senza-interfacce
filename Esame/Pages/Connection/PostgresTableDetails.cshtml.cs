@@ -24,12 +24,15 @@ namespace Esame.Pages.Connection
             PostgresTable.Columns.Add("Name", typeof(string));
             PostgresTable.Columns.Add("Type", typeof(string));
             PostgresTable.Columns.Add("NullorNot", typeof(string));
+            PostgresTable.Columns.Add("PK", typeof(string));
         }
 
         [BindProperty]
         public PostgresOpenConnection Input { get; set; }
 
         public int contatore { get; set; }
+
+        public IList<string> Pkey { get; set; }= new List<string>();
 
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
@@ -45,13 +48,20 @@ namespace Esame.Pages.Connection
                 return NotFound();
             }
             TableColumns(Input, name);
-            ViewData["PostgresTable"] = PostgresTable;
 
             foreach (DataRow r in PostgresTable.Rows)
             {
+                foreach(var item in Pkey)
+                {
+                    if (r[1].Equals(item))
+                    {
+                        r["PK"] = "Primary Key";
+                    }
+                }
                 contatore++;
-                Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
+                //Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
             }
+            ViewData["PostgresTable"] = PostgresTable;
             TableValue(Input, name);
             ViewData["Dati"] = Dati;
 
@@ -97,7 +107,16 @@ namespace Esame.Pages.Connection
 
                 PostgresTable.Rows.Add(dr[0], dr.GetString(1), dr.GetString(2),NullorNot);
             }
-            
+            dr.Close();
+
+            NpgsqlCommand cmd2 = new NpgsqlCommand($"select kc.column_name from information_schema.table_constraints tc, information_schema.key_column_usage kc where tc.constraint_type = 'PRIMARY KEY' and kc.table_name = tc.table_name and kc.table_schema = tc.table_schema and kc.constraint_name = tc.constraint_name AND kc.table_name = '{name}';", o);
+            var dr2 = cmd2.ExecuteReader();
+            while (dr2.Read())//loop through the various columns and their info
+            {
+                Pkey.Add(dr2.GetString(0));
+                //Console.WriteLine(dr2.GetString(0));
+            }
+
         }
 
         public void TableValue(PostgresOpenConnection Input, string name)
