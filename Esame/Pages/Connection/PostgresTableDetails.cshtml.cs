@@ -25,6 +25,7 @@ namespace Esame.Pages.Connection
             PostgresTable.Columns.Add("Type", typeof(string));
             PostgresTable.Columns.Add("NullorNot", typeof(string));
             PostgresTable.Columns.Add("PK", typeof(string));
+            PostgresTable.Columns.Add("FK", typeof(string));
         }
 
         [BindProperty]

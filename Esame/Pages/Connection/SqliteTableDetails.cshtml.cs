@@ -21,7 +21,7 @@ namespace Esame.Pages.Connection
         public DataTable Dati { get; set; } = new DataTable();
 
 
-        public SqliteTableDetailsModel(ConnectionContext context)
+        public  (ConnectionContext context)
         {
             _context = context;
             SqliteTable.Columns.Add("Colonna", typeof(int));
@@ -29,6 +29,7 @@ namespace Esame.Pages.Connection
             SqliteTable.Columns.Add("Type", typeof(string));
             SqliteTable.Columns.Add("NullorNot", typeof(string));
             SqliteTable.Columns.Add("PK", typeof(string));
+            SqliteTable.Columns.Add("FK", typeof(string));
         }
 
         [BindProperty]
@@ -87,25 +88,28 @@ namespace Esame.Pages.Connection
                 string NullorNot;
                 if (dr.GetString(3).Equals(0))
                 {
-
                     NullorNot = "NULL";
                 }
                 else
                 {
                     NullorNot = "NOT NULL";
                 }
+
                 int value = Int32.Parse(dr.GetString(5));
+                var primaryKey = "";
                 if (value==1)
                 {
-                    
-                    SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot,"Primary Key");
+                    primaryKey = "Primary Key";
                 }
-                else
+               
+                int valueF = Int32.Parse(dr.GetString(5));
+                var foreignKey = "";
+                if (valueF == 1)
                 {
-                    
-                    SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot);
+                    foreignKey = "Foreign Key";
                 }
-
+                
+                SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot, primaryKey, foreignKey);
             }
             dr.Close();
 
