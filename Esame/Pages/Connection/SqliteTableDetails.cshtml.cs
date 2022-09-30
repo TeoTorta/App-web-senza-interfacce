@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
+using System.Security.Cryptography.Xml;
 using System.Xml.Linq;
 
 namespace Esame.Pages.Connection
@@ -20,8 +21,9 @@ namespace Esame.Pages.Connection
         public DataTable SqliteTable { get; set; } = new DataTable();
         public DataTable Dati { get; set; } = new DataTable();
 
+        public DataTable References { get; set; } = new DataTable();
 
-        public  (ConnectionContext context)
+        public SqliteTableDetailsModel(ConnectionContext context)
         {
             _context = context;
             SqliteTable.Columns.Add("Colonna", typeof(int));
@@ -30,6 +32,10 @@ namespace Esame.Pages.Connection
             SqliteTable.Columns.Add("NullorNot", typeof(string));
             SqliteTable.Columns.Add("PK", typeof(string));
             SqliteTable.Columns.Add("FK", typeof(string));
+
+            References.Columns.Add("From", typeof(string));
+            References.Columns.Add("To", typeof(string));
+            References.Columns.Add("Table", typeof(string));
         }
 
         [BindProperty]
@@ -55,9 +61,16 @@ namespace Esame.Pages.Connection
             
             foreach (DataRow r in SqliteTable.Rows)
             {
-
-                //Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
                 contatore++;
+
+                foreach (DataRow rf in References.Rows)
+                {
+                    if (rf["From"].Equals(r["name"]))
+                    {
+                        r["FK"]= $"({rf["from"]}) REFERENCES {rf["To"]} ({rf["Table"]})";
+                    }
+                }
+                   
             }
             TableValue(Input, name);
             ViewData["Dati"] = Dati;
@@ -101,19 +114,24 @@ namespace Esame.Pages.Connection
                 {
                     primaryKey = "Primary Key";
                 }
-               
+               /*
                 int valueF = Int32.Parse(dr.GetString(5));
                 var foreignKey = "";
                 if (valueF == 1)
                 {
                     foreignKey = "Foreign Key";
                 }
-                
-                SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot, primaryKey, foreignKey);
+                */
+                SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot, primaryKey);
             }
             dr.Close();
+            var cmd2 = new SqliteCommand("PRAGMA foreign_key_list("+name+")", o);
+            var dr2 = cmd2.ExecuteReader();
+            while (dr2.Read())//loop through the various columns and their info
+            {
+                References.Rows.Add(dr2.GetString(3), dr2.GetString(4), dr2.GetString(2));
 
-
+            }
 
         }
 
