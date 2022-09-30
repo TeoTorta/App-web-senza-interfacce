@@ -41,11 +41,13 @@ namespace Esame.Pages.Connection
         [BindProperty]
         public SqliteOpenConnection Input { get; set; }
         public int contatore = 0;
+        public string TableName { get; set; }
         public List<string> nomi {get; set; }= new List<string>();
 
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
         {
+            TableName = name;
             if (id == null)
             {
                 return NotFound();
@@ -109,19 +111,12 @@ namespace Esame.Pages.Connection
                 }
 
                 int value = Int32.Parse(dr.GetString(5));
+                Console.WriteLine("PKKK==" + value);
                 var primaryKey = "";
-                if (value==1)
+                if (value>0)
                 {
                     primaryKey = "Primary Key";
                 }
-               /*
-                int valueF = Int32.Parse(dr.GetString(5));
-                var foreignKey = "";
-                if (valueF == 1)
-                {
-                    foreignKey = "Foreign Key";
-                }
-                */
                 SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot, primaryKey);
             }
             dr.Close();
