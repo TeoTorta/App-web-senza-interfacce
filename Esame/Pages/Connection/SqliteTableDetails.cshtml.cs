@@ -120,6 +120,7 @@ namespace Esame.Pages.Connection
                 SqliteTable.Rows.Add(dr.GetString(0), dr.GetString(1), dr.GetString(2), NullorNot, primaryKey);
             }
             dr.Close();
+
             var cmd2 = new SqliteCommand("PRAGMA foreign_key_list("+name+")", o);
             var dr2 = cmd2.ExecuteReader();
             while (dr2.Read())//loop through the various columns and their info

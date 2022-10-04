@@ -6,6 +6,7 @@ using Npgsql;
 using System.Data.SQLite;
 using System.Data;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Cryptography.Xml;
 
 namespace Esame.Pages.Connection
 {
@@ -15,6 +16,8 @@ namespace Esame.Pages.Connection
 
         public DataTable PostgresTable { get; set; } = new DataTable();
         public DataTable Dati { get; set; } = new DataTable();
+
+        public DataTable References { get; set; } = new DataTable();
 
 
         public PostgresTableDetailsModel(ConnectionContext context)
@@ -26,12 +29,16 @@ namespace Esame.Pages.Connection
             PostgresTable.Columns.Add("NullorNot", typeof(string));
             PostgresTable.Columns.Add("PK", typeof(string));
             PostgresTable.Columns.Add("FK", typeof(string));
+
+            References.Columns.Add("From", typeof(string));
+            References.Columns.Add("To", typeof(string));
+            References.Columns.Add("Table", typeof(string));
         }
 
         [BindProperty]
         public PostgresOpenConnection Input { get; set; }
 
-        public int contatore { get; set; }
+        public int contatore { get; set; } = 0;
 
         public IList<string> Pkey { get; set; }= new List<string>();
 
@@ -57,6 +64,13 @@ namespace Esame.Pages.Connection
                     if (r[1].Equals(item))
                     {
                         r["PK"] = "Primary Key";
+                    }
+                }
+                foreach (DataRow rf in References.Rows)
+                {
+                    if (rf["From"].Equals(r["name"]))
+                    {
+                        r["FK"] = $"({rf["from"]}) REFERENCES {rf["To"]} ({rf["Table"]})";
                     }
                 }
                 contatore++;
@@ -117,6 +131,22 @@ namespace Esame.Pages.Connection
                 Pkey.Add(dr2.GetString(0));
                 //Console.WriteLine(dr2.GetString(0));
             }
+            dr2.Close();
+
+
+            NpgsqlCommand cmd3 = new NpgsqlCommand($"SELECT  tc.table_schema, tc.constraint_name, tc.table_name, kcu.column_name, ccu.table_schema AS foreign_table_schema, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name  FROM information_schema.table_constraints AS tc JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name='{name}';", o);
+            var dr3 = cmd3.ExecuteReader();
+            while (dr3.Read())//loop through the various columns and their info
+            {
+               // Console.WriteLine(dr3.GetString(0)+" "+ dr3.GetString(1) + " "+dr3.GetString(2) + " "+dr3.GetString(3) + " "+dr3.GetString(4) + " "+ dr3.GetString(5) + " "+ dr3.GetString(6));
+                References.Rows.Add(dr3.GetString(3), dr3.GetString(5), dr3.GetString(6));
+                
+            }
+            dr3.Close();
+
+
+
+
 
         }
 

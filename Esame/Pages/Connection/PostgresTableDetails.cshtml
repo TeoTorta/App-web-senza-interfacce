@@ -20,9 +20,26 @@
 
                 foreach (System.Data.DataRow dr in dt.Rows)
                 {
-                    <th>@dr[0] @dr[1] (@dr[2], @dr[3], @dr[4])</th>
-                }
+                    <th>
+                        @dr[0] @dr[1] (
+                        @dr[2]
+                        @if (@dr[3] != "")
+                        {
+                            @dr[3]
+                        }
 
+                        @if (@dr[4] != "")
+                        {
+                            @dr[4]
+                        }
+
+                        @if (@dr[5] != "")
+                        {
+                            @dr[5]
+                        }
+                        )
+                    </th>
+                }
             }
         </tr>
 
