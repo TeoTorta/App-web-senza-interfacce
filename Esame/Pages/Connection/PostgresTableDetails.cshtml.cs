@@ -17,6 +17,7 @@ namespace Esame.Pages.Connection
         public DataTable PostgresTable { get; set; } = new DataTable();
         public DataTable Dati { get; set; } = new DataTable();
 
+        public string TableName { get; set; }
         public DataTable References { get; set; } = new DataTable();
 
 
@@ -45,6 +46,7 @@ namespace Esame.Pages.Connection
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
         {
+            TableName = name;
             if (id == null)
             {
                 return NotFound();
