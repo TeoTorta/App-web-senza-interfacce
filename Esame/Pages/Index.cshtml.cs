@@ -46,20 +46,6 @@ namespace Esame.Pages
             {
                 GetTabellePostgres();
                 ViewData["PostgresTable"] = PostgresTable;
-                /*
-                foreach (DataRow r in PostgresTable.Rows)
-                {
-                    Console.WriteLine("Id: {0}\t Database : {1} \t", r[0], r[1]);
-
-                    //Console.WriteLine(r[2].GetType());
-
-                    IList<string> a = (IList<string>)r[2];
-                    foreach (var item in a)
-                    {
-                        Console.WriteLine(item);
-                    }
-                }
-                */
 
             }
 

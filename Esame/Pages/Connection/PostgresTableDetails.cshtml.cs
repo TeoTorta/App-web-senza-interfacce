@@ -39,12 +39,14 @@ namespace Esame.Pages.Connection
         public PostgresOpenConnection Input { get; set; }
 
         public int contatore { get; set; } = 0;
+        public string TableName { get; set; }
 
         public IList<string> Pkey { get; set; }= new List<string>();
 
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
         {
+            TableName = name;
             if (id == null)
             {
                 return NotFound();

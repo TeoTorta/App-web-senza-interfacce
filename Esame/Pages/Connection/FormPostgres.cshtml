@@ -6,56 +6,6 @@
 
 
 
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-
-<div class="sidebar w3-light-grey w3-bar-block" style="width:20%; overflow:auto">
-    <h3 class="w3-bar-item" style="text-align:center; "><b>Connessioni attive</b></h3>
-    @if (ViewData["PostgresTable"] != null)
-    {
-        var dt = ViewData["PostgresTable"] as System.Data.DataTable;
-
-        foreach (System.Data.DataRow dr in dt.Rows)
-        {
-            <h4>@dr[1]</h4>
-
-            <span class="arrow_carrot-down"></span>
-            <ul class="dropdown">
-                @foreach (var item in @dr[2] as IList<string>)
-                {
-                    <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/PostgresTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">
-                    <li>@item</li></a>
-                }
-            </ul>
-        }
-    }
-
-    @if (ViewData["SqliteTable"] != null)
-    {
-        var dt2 = ViewData["SqliteTable"] as System.Data.DataTable;
-
-        foreach (System.Data.DataRow dr in dt2.Rows)
-        {
-            <h4>@dr[1]</h4>
-
-            <span class="arrow_carrot-down"></span>
-            <ul class="dropdown">
-                @foreach (var item in @dr[2] as IList<string>)
-                {
-                    <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/SqliteTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">
-                    <li> @item</li>
-                    </a>
-
-                }
-            </ul>
-        }
-    }
-</div>
-
-
-
 @section Scripts {
 <script> src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
 

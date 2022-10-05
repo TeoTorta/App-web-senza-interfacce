@@ -59,7 +59,7 @@ namespace Esame.Pages.Connection
                     if (SqliteTable[i].Path.Equals(Input.Path))
                     {
                         StatusMessage = "I dati sono già stati inseriti nel database!";
-                        connection.Close();
+                       
                         return Page();
                     }
                 }
