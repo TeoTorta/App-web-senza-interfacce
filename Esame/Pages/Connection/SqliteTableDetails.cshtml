@@ -20,7 +20,8 @@
             {
                 var dt = ViewData["SqliteTable"] as System.Data.DataTable;
 
-                if(dt != null){
+                if(dt != null)
+                {
                     foreach (System.Data.DataRow dr in dt.Rows)
                     {
                         <th>@dr[0] @dr[1] (
