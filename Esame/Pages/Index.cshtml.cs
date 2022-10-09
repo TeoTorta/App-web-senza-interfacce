@@ -91,7 +91,7 @@ namespace Esame.Pages
                     tabelle.Add(rdr.GetString(0));
                 }
                 Console.WriteLine(tabelle.Count);
-                string result = Path.GetFileName(o.DataSource);
+                string result = Path.GetFileName(o.Database);
                 PostgresTable.Rows.Add(PostgresList[i].Id, result, tabelle);
 
             }

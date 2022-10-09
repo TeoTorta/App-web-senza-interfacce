@@ -18,7 +18,10 @@
             foreach (System.Data.DataRow dr in dt.Rows)
             {
       
-            <h4> @dr[1] </h4>         <!-- Mettere nome db -->
+            <h4> @dr[1] </h4>       
+
+            <h5> <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptPostgres" asp-route-id="@dr[0]"> Query Editor </a>
+            </h5>
 
                 <span class="arrow_carrot-down"></span>
                 <ul class="dropdown">
@@ -39,6 +42,10 @@
             foreach (System.Data.DataRow dr in dt2.Rows)
             {
                 <h4>@dr[1]</h4>
+
+            <h5>
+                <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptSQLite" asp-route-id="@dr[0]"> Query Editor </a>
+            </h5>
 
                 <span class="arrow_carrot-down"></span>
                 <ul class="dropdown">

@@ -111,7 +111,7 @@ namespace Esame.Pages.Connection
                 }
 
                 int value = Int32.Parse(dr.GetString(5));
-                Console.WriteLine("PKKK==" + value);
+                
                 var primaryKey = "";
                 if (value>0)
                 {
