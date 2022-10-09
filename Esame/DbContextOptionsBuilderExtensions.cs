@@ -17,5 +17,4 @@ static class DbContextOptionsBuilderExtensions
                 _ => throw new NotSupportedException(),
             };
         }
-    
 }

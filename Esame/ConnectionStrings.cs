@@ -8,6 +8,3 @@
 
     public static string Get(DbProvider provider) => configurations[provider];
 }
-
-//TEST PROVA DE CRISTOO
-//TEST DE DIOS
