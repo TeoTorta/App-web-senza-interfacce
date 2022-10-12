@@ -18,9 +18,10 @@
             foreach (System.Data.DataRow dr in dt.Rows)
             {
       
-            <h4> @dr[1] </h4>       
+            <h4> @dr[1] </h4>
 
-            <h5> <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptPostgres" asp-route-id="@dr[0]"> Query Editor </a>
+            <h5>
+                <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptPostgres" asp-route-id="@dr[0]" target="_blank"> Query Editor </a>
             </h5>
 
                 <span class="arrow_carrot-down"></span>
@@ -44,14 +45,14 @@
                 <h4>@dr[1]</h4>
 
             <h5>
-                <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptSQLite" asp-route-id="@dr[0]"> Query Editor </a>
+                <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptSQLite" asp-route-id="@dr[0]" target="_blank"> Query Editor </a>
             </h5>
 
                 <span class="arrow_carrot-down"></span>
                 <ul class="dropdown">
                     @foreach (var item in @dr[2] as IList<string>)
                     {
-                        <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/SqliteTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">
+                    <a class="w3-bar-item w3-button" style="color:blue"  asp-page="/Connection/SqliteTableDetails" asp-route-name="@item" asp-route-id="@dr[0]" >
                         <li> @item</li>
                         </a>
 

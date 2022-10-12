@@ -4,6 +4,27 @@
     ViewData["Title"] = "Query Script";
 }
 
+@section Scripts {
+    <script>src = "https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js" ></script>
+
+    <script>
+        $(document).ready(function () {
+            let msg = $('#errore').val();
+            if (msg.length > 0) {
+                swal.fire(msg);
+            }
+        }
+    </script>
+
+    <script>
+            $(document).ready(function () {
+            let msg = $('#MessageOk').val();
+            if (msg.length > 0) {
+                swal.fire(msg);
+            }
+        }
+    </script>
+}
 
 
 <div class="row">
@@ -19,5 +40,51 @@
         </form>
     </div>
 </div>
+    <div style="width:500px;">
+        <input asp-for="errore" class="text-danger" style="border: none; background-color: transparent; width:500px;" readonly disabled />
+        <input asp-for="messaggioOk" style="border: none; background-color: transparent; width:500px;" readonly disabled />
+    </div>
+    
+<table class="table table-striped table-responsive">
+            <tr>
+            @if (ViewData["SqliteTable"] != null)
+            {
+                var dt = ViewData["SqliteTable"] as System.Data.DataTable;
+
+                if (dt != null)
+                {
+                
+                    @foreach (var item in Model.columns)
+                    {
+                        <th>
+                            @item
+                            </th>
+                    }
+                    
+                }
+            }
+        </tr>
+
+    @if (ViewData["Dati"] != null)
+    {
+        var dt2 = ViewData["Dati"] as System.Data.DataTable;
+    
+        foreach (System.Data.DataRow myRow in dt2.Rows)
+        {
+        
+            <tr>
+                    @for (var i = 0; i < Model.contatore; i++)
+                    {
+                    <td>
+                            @myRow[i]
+                    </td>
+                    }
+            </tr>
+        }
+    
+    
+    }
+</table>
+
 
 
