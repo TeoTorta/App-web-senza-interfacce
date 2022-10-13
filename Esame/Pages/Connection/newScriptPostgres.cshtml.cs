@@ -77,6 +77,16 @@ namespace Esame.Pages.Connection
                     {
                         columns.Clear();
                     }
+
+                    NpgsqlConnection o2 = new NpgsqlConnection(connectionString);
+
+                    o2.Open();
+
+                    var cmd2 = new NpgsqlCommand(prova.query, o2);
+
+                    var reader = cmd2.ExecuteReader();
+
+                    columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).ToList();
                 }
             }
             catch(Exception e)
