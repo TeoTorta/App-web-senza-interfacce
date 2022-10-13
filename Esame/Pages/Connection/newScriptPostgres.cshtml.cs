@@ -15,6 +15,8 @@ namespace Esame.Pages.Connection
         public String stringa { get; set; }
         public string errore { get; set; }
 
+        public DataTable PostgresTable { get; set; } = new DataTable();
+
         public int contatore = 0;
 
         public List<string> columns { get; set; } = new List<string>();
@@ -75,8 +77,6 @@ namespace Esame.Pages.Connection
                     {
                         columns.Clear();
                     }
-
-
                 }
             }
             catch(Exception e)
@@ -94,7 +94,11 @@ namespace Esame.Pages.Connection
                 Console.WriteLine(dr.GetString(2));
             }
             */
-            
+
+            ViewData["Dati"] = Dati;
+            ViewData["PostgresTable"] = PostgresTable;
+            contatore = Dati.Columns.Count;
+
             return Page();
         }
     }
