@@ -40,13 +40,13 @@ namespace Esame.Pages.Connection
 
         public IActionResult OnPost()
         {
-            Console.WriteLine(Input.Database);
+            //Console.WriteLine(Input.Database);
             string connectionString = $"Host={Input.Host}; Database={Input.Database}; User ID={Input.UserId}; Password={Input.Password};";
             NpgsqlConnection o = new NpgsqlConnection(connectionString);
 
             o.Open();
 
-            Console.WriteLine(o.State);
+            //Console.WriteLine(o.State);
 
             var cmd = new NpgsqlCommand(prova.query, o);
             var dr = cmd.ExecuteReader();
@@ -55,6 +55,8 @@ namespace Esame.Pages.Connection
             while (dr.Read())//loop through the various columns and their info
             {
                 Console.WriteLine(dr.GetString(0));
+                Console.WriteLine(dr.GetString(1));
+                Console.WriteLine(dr.GetString(2));
             }
             return Page();
         }

@@ -87,10 +87,7 @@ namespace Esame.Pages.Connection
                     var cmd2 = new SqliteCommand(prova.query, o2);
                     var reader = cmd2.ExecuteReader();
                     columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).ToList();
-                }
-                
-
-               
+                }            
 
             }
             catch(Exception ex)
