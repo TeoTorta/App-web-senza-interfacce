@@ -6,9 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-
-
-
 <div style="margin-left:5%; margin-right:5%">
     <h1> Table Details : @Model.TableName </h1>
     <br />
@@ -24,28 +21,32 @@
                 {
                     foreach (System.Data.DataRow dr in dt.Rows)
                     {
-                        <th>@dr[0] @dr[1] (
-                        @dr[2]
-                        @if(@dr[3] != "") {
-                        
-                            @dr[3]
-                        }
-                    
-                        @if (@dr[4] != "")
-                        {  
-                            @dr[4]
-                        }
-                    
-                        @if (@dr[5] != "")
-                        {
-                            @dr[5]
-                        }
-                        )
+                        <th title="@dr[2]   @dr[3]   @dr[4]   @dr[5]">
+                            @dr[0] @dr[1]  
                         </th>
                     }
                 }
             }
         </tr>
+
+        <!--
+        dr[2]
+        if (dr[3] != "")
+        {
+            dr[3]
+        }
+
+        if (dr[4] != "")
+        {
+            dr[4]
+        }
+
+        if (dr[5] != "")
+        {
+            dr[5]
+        }
+        mettere le chiocciole prima di if e dr
+        -->
 
         @if (ViewData["Dati"] != null)
         {
