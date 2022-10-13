@@ -65,13 +65,19 @@ namespace Esame.Pages.Connection
             string connectionString = $"Data Source={Input.Path}";
             
             SQLiteConnection o = new SQLiteConnection(connectionString);
+
             o.Open();
+
             var cmd = new SQLiteCommand(prova.query, o);
+
             try
             {
                 SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(cmd);
+
                 var count=myAdapter.Fill(Dati);
+
                 o.Close();
+
                 if (count==0)
                 {
                     messaggioOk = "La query è andata a buon fine";
@@ -83,9 +89,13 @@ namespace Esame.Pages.Connection
                         columns.Clear();
                     }
                     SqliteConnection o2 = new SqliteConnection(connectionString);
+
                     o2.Open();
+
                     var cmd2 = new SqliteCommand(prova.query, o2);
+
                     var reader = cmd2.ExecuteReader();
+
                     columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).ToList();
                 }            
 

@@ -2,6 +2,7 @@ using Esame.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Npgsql;
+using System.Data;
 
 namespace Esame.Pages.Connection
 {
@@ -12,6 +13,13 @@ namespace Esame.Pages.Connection
         [BindProperty]
         public Test prova { get; set; } = default;
         public String stringa { get; set; }
+        public string errore { get; set; }
+
+        public int contatore = 0;
+
+        public List<string> columns { get; set; } = new List<string>();
+        public string messaggioOk { get; set; }
+        public DataTable Dati { get; set; } = new DataTable();
 
         public newScriptPostgresModel(ConnectionContext context)
         {
@@ -49,15 +57,44 @@ namespace Esame.Pages.Connection
             //Console.WriteLine(o.State);
 
             var cmd = new NpgsqlCommand(prova.query, o);
+
+            try
+            {
+                NpgsqlDataAdapter myAdapter = new NpgsqlDataAdapter(cmd);
+                var count = myAdapter.Fill(Dati);
+
+                o.Close();
+
+                if(count == 0)
+                {
+                    messaggioOk = "La query è andata a buon fine";
+                }
+                else
+                {
+                    if(columns.Count > 0)
+                    {
+                        columns.Clear();
+                    }
+
+
+                }
+            }
+            catch(Exception e)
+            {
+                errore = e.Message;
+            }
+
+            /*
             var dr = cmd.ExecuteReader();
 
-
-            while (dr.Read())//loop through the various columns and their info
+            while (dr.Read())       //loop through the various columns and their info
             {
                 Console.WriteLine(dr.GetString(0));
                 Console.WriteLine(dr.GetString(1));
                 Console.WriteLine(dr.GetString(2));
             }
+            */
+            
             return Page();
         }
     }
