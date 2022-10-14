@@ -23,7 +23,7 @@
                     foreach (System.Data.DataRow dr in dt.Rows)
                     {
                         <th title="@dr[2]   @dr[3]   @dr[4]   @dr[5]">
-                            @dr[0] @dr[1]
+                             @dr[1]
                         </th>
                     }
                 }
@@ -48,23 +48,31 @@
         }
         mettere le chiocciole prima di if e dr
         -->
-
         @if (ViewData["Dati"] != null)
         {
             var dt2 = ViewData["Dati"] as System.Data.DataTable;
-
+            var r = 0;
             foreach (System.Data.DataRow myRow in dt2.Rows)
             {
+                r++;
                 <tr>
                     @for (var i = 0; i < Model.contatore; i++)
                     {
-
                         <td>
                             @myRow[i]
                         </td>
                     }
                 </tr>
 
+            }
+            if (r == 0)
+            {
+                <tr>
+                    @for (var i = 0; i < Model.contatore; i++)
+                    {
+                        <td>&nbsp;</td>
+                    }
+                </tr>
             }
         }
 

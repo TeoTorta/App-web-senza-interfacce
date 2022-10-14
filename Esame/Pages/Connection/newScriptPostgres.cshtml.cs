@@ -1,3 +1,4 @@
+#nullable disable
 using Esame.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

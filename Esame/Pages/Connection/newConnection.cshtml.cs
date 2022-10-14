@@ -1,3 +1,4 @@
+#nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +9,11 @@ namespace Esame.Pages
     {
 
         [BindProperty]
-        public Provider Input { get; set; } = default!;
+        public Provider Input { get; set; }
 
         
         public void OnGet()
         {
-
         }
 
         public IActionResult OnPost()

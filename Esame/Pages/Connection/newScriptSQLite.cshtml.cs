@@ -84,6 +84,7 @@ namespace Esame.Pages.Connection
                 }
                 else
                 {
+
                     if(columns.Count>0)
                     {
                         columns.Clear();
