@@ -19,18 +19,27 @@
         {
 
             <h4> @dr[1] </h4>
+             <ul>
+                <li>
+                    <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptPostgres" asp-route-id="@dr[0]" target="_blank">Query Editor</a>
+                </li>
 
-            <h5>
-                <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptPostgres" asp-route-id="@dr[0]" target="_blank">Query Editor</a>
-            </h5>
+                <li>
+                    <a class="w3-bar-item w3-button" data-bs-toggle="collapse" style="color:blue" href="#collapseExample" role="button" aria-controls="collapseExample" id = "postgres">
+                        Tables
+                    </a>
 
-            <span class="arrow_carrot-down"></span>
-            <ul class="dropdown">
-                @foreach (var item in @dr[2] as IList<string>)
-                {
-                    <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/PostgresTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">
-                    <li>@item</li></a>
-                }
+                    <div class="collapse" style=" background-color: rgb(241, 241, 241)" id="collapseExample">
+                        <div class="card card-body" style=" background-color: rgb(241, 241, 241)">
+                            @foreach (var item in @dr[2] as IList<string>)
+                            {
+                                <a class="w3-bar-item w3-button" style=" color:blue" asp-page="/Connection/PostgresTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">
+                                    @item
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </li>
             </ul>
             <hr />
         }
@@ -42,20 +51,25 @@
 
         foreach (System.Data.DataRow dr in dt2.Rows)
         {
-            <h4>@dr[1]</h4>
+
+            <h4> @dr[1] </h4>
             <ul>
-                <li><a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptSQLite" asp-route-id="@dr[0]" target="_blank">Query Editor</a></li>
+                <li>
+                    <a class="w3-bar-item w3-button" style="color:blue" asp-page="/Connection/newScriptSQLite" asp-route-id="@dr[0]" target="_blank">Query Editor</a>
+                </li>
 
                 <li>
-                    <div class="dropdown">
-                        <span style="color:blue; text-decoration:underline; ">Tabelle</span>
-                        <div class="dropdown-content">
+                    <a class="w3-bar-item w3-button" data-bs-toggle="collapse" style="color:blue" href="#collapseExample" role="button" aria-controls="collapseExample" id = "sqlite">
+                        Tables
+                    </a>
+
+                    <div class="collapse" style=" background-color: rgb(241, 241, 241)" id="collapseExample">
+                        <div class="card card-body" style=" background-color: rgb(241, 241, 241)">
                             @foreach (var item in @dr[2] as IList<string>)
                             {
-                                <a style="color:black" asp-page="/Connection/SqliteTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">
+                                <a class="w3-bar-item w3-button" style=" color:blue" asp-page="/Connection/SqliteTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">
                                     @item
                                 </a>
-
                             }
                         </div>
                     </div>
