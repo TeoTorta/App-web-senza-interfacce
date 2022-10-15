@@ -12,7 +12,7 @@ namespace Esame.Pages.Connection
         private readonly ConnectionContext _context;
 
         [BindProperty]
-        public Test prova { get; set; } = default;
+        public Query statement { get; set; } = default;
         public String stringa { get; set; }
         public string errore { get; set; }
 

@@ -20,7 +20,7 @@ namespace Esame.Pages.Connection
         private readonly ConnectionContext _context;
 
         [BindProperty]
-        public Test prova { get; set; }
+        public Query statement { get; set; }
         public string errore { get; set; }
 
         public string messaggioOk{ get; set; }

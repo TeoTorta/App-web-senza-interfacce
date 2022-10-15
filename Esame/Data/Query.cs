@@ -1,6 +1,6 @@
 ﻿namespace Esame.Data
 {
-    public class Test
+    public class Query
     {
         public String query { get; set; } = default;
 
