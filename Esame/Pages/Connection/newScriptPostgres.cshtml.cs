@@ -51,15 +51,13 @@ namespace Esame.Pages.Connection
 
         public IActionResult OnPost()
         {
-            //Console.WriteLine(Input.Database);
+
             string connectionString = $"Host={Input.Host}; Database={Input.Database}; User ID={Input.UserId}; Password={Input.Password};";
             NpgsqlConnection o = new NpgsqlConnection(connectionString);
 
             o.Open();
 
-            //Console.WriteLine(o.State);
-
-            var cmd = new NpgsqlCommand(prova.query, o);
+            var cmd = new NpgsqlCommand(statement.query, o);
 
             try
             {
@@ -83,7 +81,7 @@ namespace Esame.Pages.Connection
 
                     o2.Open();
 
-                    var cmd2 = new NpgsqlCommand(prova.query, o2);
+                    var cmd2 = new NpgsqlCommand(statement.query, o2);
 
                     var reader = cmd2.ExecuteReader();
 
@@ -94,17 +92,6 @@ namespace Esame.Pages.Connection
             {
                 errore = e.Message;
             }
-
-            /*
-            var dr = cmd.ExecuteReader();
-
-            while (dr.Read())       //loop through the various columns and their info
-            {
-                Console.WriteLine(dr.GetString(0));
-                Console.WriteLine(dr.GetString(1));
-                Console.WriteLine(dr.GetString(2));
-            }
-            */
 
             ViewData["Dati"] = Dati;
             ViewData["PostgresTable"] = PostgresTable;

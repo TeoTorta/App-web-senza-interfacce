@@ -10,8 +10,5 @@ public class SqliteOpenConnection
 
     [Required]
     public string Path { get; set; } = "";
-    
-
-    
 
 }

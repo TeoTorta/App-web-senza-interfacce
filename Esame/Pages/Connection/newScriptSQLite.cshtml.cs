@@ -68,7 +68,7 @@ namespace Esame.Pages.Connection
 
             o.Open();
 
-            var cmd = new SQLiteCommand(prova.query, o);
+            var cmd = new SQLiteCommand(statement.query, o);
 
             try
             {
@@ -93,7 +93,7 @@ namespace Esame.Pages.Connection
 
                     o2.Open();
 
-                    var cmd2 = new SqliteCommand(prova.query, o2);
+                    var cmd2 = new SqliteCommand(statement.query, o2);
 
                     var reader = cmd2.ExecuteReader();
 
@@ -107,17 +107,6 @@ namespace Esame.Pages.Connection
                 errore = ex.Message;
             }
 
-
-            /*
-            foreach (DataRow myRow in Dati.Rows)
-            {
-                foreach (DataColumn myColumn in Dati.Columns)
-                {
-                    Console.Write(myRow[myColumn] + "\t");
-                }
-                Console.WriteLine();
-            }
-            */
             ViewData["Dati"] = Dati;
             ViewData["SqliteTable"] = SqliteTable;
             contatore = Dati.Columns.Count;
