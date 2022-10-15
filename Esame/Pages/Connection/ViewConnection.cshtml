@@ -3,14 +3,12 @@
 @{
 }
 
-
-
-
-<div class="text-center" style="margin-left:5%; margin-right:5%">
+<div class="text-center" >
     <h2>Tabella Connessioni Attive Postgres</h2>
     <table class="table table-striped table-responsive">
         <thead>
             <tr>
+                <th style="width:50px"></th>
                 <th>
                     @Html.DisplayNameFor(model => model.PostgresTable[0].Host)
                 </th>
@@ -27,23 +25,39 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.PostgresTable)
+            @if (Model.PostgresTable != null)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Host)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Database)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Password)
-                    </td>
+                var countPost = 0;
+                @foreach (var item in Model.PostgresTable)
+                {
+                    countPost++;
+                    <tr>
+                        <td>countPost</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Host)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Database)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>
 
-                </tr>
+                    </tr>
+                }
+                @if (countPost == 0)
+                {
+                    <tr>
+                        <td>&emsp;</td>
+                        <td>&emsp;</td>
+                        <td>&emsp;</td>
+                        <td>&emsp;</td>
+                        <td>&emsp;</td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
@@ -51,24 +65,38 @@
     <hr />
     <br />
     <h2>Tabella Connessioni Attive SQLite</h2>
-    <table class="table table-striped table-responsive">
+    <table class="table table-striped table-responsive center">
         <thead>
             <tr>
+                <th style="width:50px"></th>
                 <th>
                     @Html.DisplayNameFor(model => model.SqliteTable[0].Path)
                 </th>
-                
+
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.SqliteTable)
+            @if (Model.SqliteTable != null)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Path)
-                    </td>
+                var countLite = 0;
+                @foreach (var item in Model.SqliteTable)
+                {
+                    countLite++;
+                    <tr>
+                        <td>@countLite</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Path)
+                        </td>
 
-                </tr>
+                    </tr>
+                }
+                @if (countLite == 0)
+                {
+                    <tr>
+                        <td>&emsp;</td>
+                        <td>&emsp;</td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
