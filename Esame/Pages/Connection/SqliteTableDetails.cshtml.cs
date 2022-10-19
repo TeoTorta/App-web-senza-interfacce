@@ -44,6 +44,14 @@ namespace Esame.Pages.Connection
             References.Columns.Add("To", typeof(string));
             References.Columns.Add("Table", typeof(string));
 
+
+            Index.Columns.Add("Seq", typeof(string));
+            Index.Columns.Add("Name", typeof(string));
+            Index.Columns.Add("Unique", typeof(string));
+            Index.Columns.Add("Origin", typeof(string));
+            Index.Columns.Add("Partial", typeof(string));
+          
+
         }
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
@@ -78,12 +86,8 @@ namespace Esame.Pages.Connection
             TableValue(Input, name);
             ViewData["Dati"] = Dati;
             Tableindex(Input, name);
-            foreach(DataRow row in Index.Rows) {
-                foreach(DataColumn col in Index.Columns)
-                {
-                    Console.WriteLine(row[col]);
-                }  
-            }
+            ViewData["Index"] = Index;
+
             return Page();
         }
 
@@ -149,9 +153,6 @@ namespace Esame.Pages.Connection
             {
                 if (r["PK"] != "" || r["PK"] != "")
                 {
-                    //Console.WriteLine("PK:   " + r["PK"]);
-                    //Console.WriteLine("FK:   " + r["FK"]);
-
                     columnList.Add((string)r["Name"]);
                 }
             }
@@ -169,27 +170,24 @@ namespace Esame.Pages.Connection
                 }
 
             }
+
+            var cmd = new SqliteCommand("DROP INDEX IF EXISTS idx", o);
+            var cmd2 = new SqliteCommand("CREATE INDEX idx ON " + name + " " + columnString, o);
             
-            Console.WriteLine(columnString);
-
-            //var cmd = new SqliteCommand("PRAGMA table_info(" + name + ")", o);
-            //var dr = cmd.ExecuteReader();
-
-            //string query = "CREATE INDEX idx ON " + name + " (" + columnString + ")";
-            /*
-            var cmd = new SqliteCommand("CREATE INDEX idx ON " + name + " " + columnString, o);
             var reader = cmd.ExecuteReader();
-            */
-            string query2 = "PRAGMA index_list(" + name + ")";
+            var reader2 = cmd2.ExecuteReader();
 
-            var cmd2 = new SqliteCommand(query2, o);
-            var rd = cmd2.ExecuteReader();
+            string query2 = "PRAGMA index_list(" + name + ")";
+            
+            var cmd3 = new SqliteCommand(query2, o);
+            var rd = cmd3.ExecuteReader();
 
             
             while (rd.Read())
             {
-                Index.Rows.Add(rd.GetString(0));
+                Index.Rows.Add(rd.GetString(0),rd.GetString(1),rd.GetString(2), rd.GetString(3), rd.GetString(4));
             }
+            
         }
 
     }
