@@ -1,6 +1,5 @@
 #nullable disable
 using Esame.Data;
-using Esame.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.Sqlite;

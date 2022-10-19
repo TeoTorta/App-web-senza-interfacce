@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.Sqlite;
 using System.Data;
 using System.Data.SQLite;
+using System.Xml;
+using System.Xml.Linq;
 
 
 namespace Esame.Pages.Connection
@@ -13,10 +15,14 @@ namespace Esame.Pages.Connection
 
         private readonly ConnectionContext _context;
 
+        
         public DataTable SqliteTable { get; set; } = new DataTable();
+
         public DataTable Dati { get; set; } = new DataTable();
 
         public DataTable References { get; set; } = new DataTable();
+
+        public DataTable Index { get; set; } = new DataTable();
 
         [BindProperty]
         public SqliteOpenConnection Input { get; set; }
@@ -37,6 +43,7 @@ namespace Esame.Pages.Connection
             References.Columns.Add("From", typeof(string));
             References.Columns.Add("To", typeof(string));
             References.Columns.Add("Table", typeof(string));
+
         }
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
@@ -70,7 +77,13 @@ namespace Esame.Pages.Connection
             }
             TableValue(Input, name);
             ViewData["Dati"] = Dati;
-            
+            Tableindex(Input, name);
+            foreach(DataRow row in Index.Rows) {
+                foreach(DataColumn col in Index.Columns)
+                {
+                    Console.WriteLine(row[col]);
+                }  
+            }
             return Page();
         }
 
@@ -123,6 +136,62 @@ namespace Esame.Pages.Connection
             SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(cmd);
             myAdapter.Fill(Dati);
         }
+
+
+        public void Tableindex(SqliteOpenConnection Input, string name)
+        {
+
+            string connectionString = $"Data Source={Input.Path}";
+            SqliteConnection o = new SqliteConnection(connectionString);
+            o.Open();
+            List<string> columnList = new List<string>();
+            foreach (DataRow r in SqliteTable.Rows)
+            {
+                if (r["PK"] != "" || r["PK"] != "")
+                {
+                    //Console.WriteLine("PK:   " + r["PK"]);
+                    //Console.WriteLine("FK:   " + r["FK"]);
+
+                    columnList.Add((string)r["Name"]);
+                }
+            }
+
+            string columnString = "(";
+            for (int i = 0; i < columnList.Count; i++)
+            {
+                if (i == columnList.Count - 1)
+                {
+                    columnString = columnString + columnList[i] + ")";
+                }
+                else
+                {
+                    columnString = columnString + columnList[i] + ", ";
+                }
+
+            }
+            
+            Console.WriteLine(columnString);
+
+            //var cmd = new SqliteCommand("PRAGMA table_info(" + name + ")", o);
+            //var dr = cmd.ExecuteReader();
+
+            //string query = "CREATE INDEX idx ON " + name + " (" + columnString + ")";
+            /*
+            var cmd = new SqliteCommand("CREATE INDEX idx ON " + name + " " + columnString, o);
+            var reader = cmd.ExecuteReader();
+            */
+            string query2 = "PRAGMA index_list(" + name + ")";
+
+            var cmd2 = new SqliteCommand(query2, o);
+            var rd = cmd2.ExecuteReader();
+
+            
+            while (rd.Read())
+            {
+                Index.Rows.Add(rd.GetString(0));
+            }
+        }
+
     }
 }
 

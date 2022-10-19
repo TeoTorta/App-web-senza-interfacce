@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Esame.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    [Migration("20221005135437_in")]
-    partial class @in
+    [Migration("20221019135030_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
