@@ -2,12 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.Sqlite;
-using System.IO;
-using Microsoft.EntityFrameworkCore.Storage;
-using System.Data;
-using System.Data.Common;
-using System;
-using Newtonsoft.Json;
 
 namespace Esame.Pages.Connection
 {
@@ -45,11 +39,7 @@ namespace Esame.Pages.Connection
                 return Page();
             }
             SqliteTable = await _context.SqliteOpenConnections.ToListAsync();
-            Connect = @"Data Source="+ Input.Path;
-            //Console.WriteLine($"Path:{Input.Path}");
-
-            
-
+            Connect = @"Data Source="+ Input.Path;         
             
             if (TestConnectionString(Input.Path, Connect))
             {
@@ -72,70 +62,34 @@ namespace Esame.Pages.Connection
             {
                 StatusMessage = "ConnectionString non valida!";
                 return Page();
-
             }
-
         }
         
         static bool TestConnectionString(string path,string connectionString)
         {
 
-                try
-                {
+            try
+            {
                 var conn = new SqliteConnection(connectionString);
 
 
-                    if (!System.IO.File.Exists(path))
-                    {
-                        Console.WriteLine("Il db non esiste");
-                        return false;
-                    }
-                    
-                    
-                    conn.Open();
-                    return true;
-
-                    /*
-                    var sql = "SELECT name FROM sqlite_master WHERE type='table'";
-                    //string sql = "SELECT * FROM Courses";
-                    using var cmd = new SqliteCommand(sql, conn);
-                    using SqliteDataReader rdr=cmd.ExecuteReader();
-                    while(rdr.Read())
-                    {
-                        Console.WriteLine("Tabella: "+ rdr.GetString(0));
-                    }
-                    return true;
-                    */
-
-                }
-                catch(Exception ex)
+                if (!System.IO.File.Exists(path))
                 {
-                    Console.WriteLine(ex.Message.ToString());
+                    Console.WriteLine("Il db non esiste");
                     return false;
                 }
-                    
-        }
+                       
+                conn.Open();
 
-        /*
-        public void QueryTest()
-        {
-            for (int i = 0; i < SqliteTable.Count; i++)
-            {
-                SqliteConnection o = JsonConvert.DeserializeObject<SqliteConnection>(SqliteTable[i].Connection);
-                var sql = "SELECT name FROM sqlite_master WHERE type='table'";
-                
-                using var cmd = new SqliteCommand(sql, o);
-                using SqliteDataReader rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    Console.WriteLine("Tabella: " + rdr.GetString(0));
-                }
-                
+                return true;
+
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                return false;
+            }          
         }
-        */
-    }
-
-        
+    }        
  }
 

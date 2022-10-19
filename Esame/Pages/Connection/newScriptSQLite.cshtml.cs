@@ -42,7 +42,6 @@ namespace Esame.Pages.Connection
           
         }
 
-
         public async Task<IActionResult> OnGetAsync(long? id)
         {
             if (id == null)
@@ -80,7 +79,7 @@ namespace Esame.Pages.Connection
 
                 if (count==0)
                 {
-                    messaggioOk = "La query è andata a buon fine";
+                    messaggioOk = "Query run successfully on Database";
                 }
                 else
                 {

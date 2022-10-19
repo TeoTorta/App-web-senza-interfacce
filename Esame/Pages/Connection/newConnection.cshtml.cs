@@ -1,7 +1,6 @@
 #nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Esame.Pages
 {
@@ -18,8 +17,6 @@ namespace Esame.Pages
 
         public IActionResult OnPost()
         {
-            //Console.WriteLine($"Valore Input {Input.provider.ToString()}");
-
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -33,7 +30,6 @@ namespace Esame.Pages
             {
                 return RedirectToPage("./FormPostgres");
             }
-            
         }
     }
 }

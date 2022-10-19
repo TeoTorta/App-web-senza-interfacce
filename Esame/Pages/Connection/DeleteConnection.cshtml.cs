@@ -11,7 +11,6 @@ namespace Esame.Pages.Connection
         {
             _context = context;
         }
-
         public IList<PostgresOpenConnection> PostgresTable { get; set; }
         public IList<SqliteOpenConnection> SqliteTable { get; set; }
 

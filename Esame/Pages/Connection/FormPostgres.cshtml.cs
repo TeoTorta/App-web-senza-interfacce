@@ -2,13 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Npgsql;
-using System;
 
 namespace Esame.Pages.Connection
 {
@@ -25,12 +19,8 @@ namespace Esame.Pages.Connection
 
 
         public IList<PostgresOpenConnection> PostgresTable { get; set; }
-
-        
        
         public NpgsqlConnection connection { get; set; }
-
-
 
         public FormPostgresModel(ConnectionContext context)
         {
@@ -50,7 +40,7 @@ namespace Esame.Pages.Connection
                 return Page();
             }
             PostgresTable = await _context.PostgresOpenConnections.ToListAsync();
-            //Console.WriteLine($"Host:{Input.Host}, database:{Input.Database}, ID:{Input.UserId}, Password:{Input.Password}");
+            
             Connect = $"Host={Input.Host}; Database={Input.Database}; User ID={Input.UserId}; Password={Input.Password};";
             
 
@@ -66,8 +56,6 @@ namespace Esame.Pages.Connection
                     }
                 }
 
-                
-                //Input.Connection = JsonConvert.SerializeObject(connection);
                 _context.PostgresOpenConnections.Add(Input);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("../Index");
@@ -90,21 +78,15 @@ namespace Esame.Pages.Connection
                 conn.Open();
                 
                 return true;
-                    /*
-                    var sql = "SELECT version()";
-                    using var cmd = new NpgsqlCommand(sql, conn);
-                    var version = cmd.ExecuteScalar().ToString();
-                    */
-                    //Console.WriteLine($"PostgreSQL version: {version}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message.ToString());
-                    return false;
-                }
 
             }
-            
-        }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                return false;
+            }
+
+        }    
     }
+}
 

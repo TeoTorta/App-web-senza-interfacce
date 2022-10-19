@@ -1,12 +1,9 @@
 #nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Data.Sqlite;
 using Npgsql;
-using System.Data.SQLite;
 using System.Data;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Security.Cryptography.Xml;
+
 
 namespace Esame.Pages.Connection
 {
@@ -19,6 +16,13 @@ namespace Esame.Pages.Connection
 
         public string TableName { get; set; }
         public DataTable References { get; set; } = new DataTable();
+
+        [BindProperty]
+        public PostgresOpenConnection Input { get; set; }
+
+        public int contatore { get; set; } = 0;
+
+        public IList<string> Pkey { get; set; } = new List<string>();
 
 
         public PostgresTableDetailsModel(ConnectionContext context)
@@ -35,14 +39,6 @@ namespace Esame.Pages.Connection
             References.Columns.Add("To", typeof(string));
             References.Columns.Add("Table", typeof(string));
         }
-
-        [BindProperty]
-        public PostgresOpenConnection Input { get; set; }
-
-        public int contatore { get; set; } = 0;
-
-        public IList<string> Pkey { get; set; }= new List<string>();
-
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
         {
@@ -76,24 +72,11 @@ namespace Esame.Pages.Connection
                     }
                 }
                 contatore++;
-                //Console.WriteLine("colonna: {0}\t Name: {1}\t Type: {2}\t  NullorNot: {3}\t", r[0], r[1], r[2], r[3]);
+                
             }
             ViewData["PostgresTable"] = PostgresTable;
             TableValue(Input, name);
             ViewData["Dati"] = Dati;
-
-            /*
-            foreach (DataRow myRow in Dati.Rows)
-            {
-                foreach (DataColumn myColumn in Dati.Columns)
-                {
-                    Console.Write(myRow[myColumn] + "\t");
-                }
-                Console.WriteLine();
-            }
-            */
-            
-
 
             return Page();
         }
@@ -107,7 +90,7 @@ namespace Esame.Pages.Connection
 
 
             var dr = cmd.ExecuteReader();
-            while (dr.Read())//loop through the various columns and their info
+            while (dr.Read())
             {
                 
                 string NullorNot;
@@ -119,30 +102,29 @@ namespace Esame.Pages.Connection
                 {
                     NullorNot = "NOT NULL";
                 }
-                
-                
 
                 PostgresTable.Rows.Add(dr[0], dr.GetString(1), dr.GetString(2),NullorNot);
             }
             dr.Close();
 
             NpgsqlCommand cmd2 = new NpgsqlCommand($"select kc.column_name from information_schema.table_constraints tc, information_schema.key_column_usage kc where tc.constraint_type = 'PRIMARY KEY' and kc.table_name = tc.table_name and kc.table_schema = tc.table_schema and kc.constraint_name = tc.constraint_name AND kc.table_name = '{name}';", o);
+            
             var dr2 = cmd2.ExecuteReader();
-            while (dr2.Read())//loop through the various columns and their info
+
+            while (dr2.Read())
             {
                 Pkey.Add(dr2.GetString(0));
-                //Console.WriteLine(dr2.GetString(0));
             }
             dr2.Close();
 
 
             NpgsqlCommand cmd3 = new NpgsqlCommand($"SELECT  tc.table_schema, tc.constraint_name, tc.table_name, kcu.column_name, ccu.table_schema AS foreign_table_schema, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name  FROM information_schema.table_constraints AS tc JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name AND ccu.table_schema = tc.table_schema WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name='{name}';", o);
+
             var dr3 = cmd3.ExecuteReader();
-            while (dr3.Read())//loop through the various columns and their info
+
+            while (dr3.Read())
             {
-               // Console.WriteLine(dr3.GetString(0)+" "+ dr3.GetString(1) + " "+dr3.GetString(2) + " "+dr3.GetString(3) + " "+dr3.GetString(4) + " "+ dr3.GetString(5) + " "+ dr3.GetString(6));
                 References.Rows.Add(dr3.GetString(3), dr3.GetString(5), dr3.GetString(6));
-                
             }
             dr3.Close();
 

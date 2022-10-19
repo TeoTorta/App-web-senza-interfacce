@@ -68,7 +68,7 @@ namespace Esame.Pages.Connection
 
                 if(count == 0)
                 {
-                    messaggioOk = "La query è andata a buon fine";
+                    messaggioOk = "Query run successfully on Database";
                 }
                 else
                 {
