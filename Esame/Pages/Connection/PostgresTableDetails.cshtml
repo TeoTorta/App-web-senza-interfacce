@@ -11,7 +11,7 @@
     <h1> Table Details : @Model.TableName</h1>
     <br />
     <hr />
-    <br /> 
+    <br /> s
     <table class="table table-striped table-responsive">
         <tr>
             @if (ViewData["PostgresTable"] != null)
@@ -19,7 +19,8 @@
                 var dt = ViewData["PostgresTable"] as System.Data.DataTable;
 
                 if(dt != null)
-                { 
+                {
+                    <th style="width:50px; background-color:lightsteelblue">RowId</th>
                     foreach (System.Data.DataRow dr in dt.Rows)
                     {
                         <th title="@dr[2]   @dr[3]   @dr[4]   @dr[5]">
@@ -38,6 +39,7 @@
             {
                 r++;
                 <tr>
+                    <td style="background-color:lightsteelblue">@r</td>
                     @for (var i = 0; i < Model.contatore; i++)
                     {
                         <td>
@@ -49,9 +51,10 @@
             if (r == 0)
             {
                 <tr>
+                    <td style="background-color:lightsteelblue">0</td>
                     @for (var i = 0; i < Model.contatore; i++)
-                    {
-                        <td>&nbsp;</td>
+                    {        
+                        <td></td>
                     }
                 </tr>
             }

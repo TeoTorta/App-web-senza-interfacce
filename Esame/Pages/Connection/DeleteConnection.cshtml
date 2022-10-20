@@ -8,7 +8,7 @@
     <table class="table table-striped table-responsive">
         <thead>
             <tr>
-                <th style="width:50px"></th>
+                <th style="width:50px; background-color:lightsteelblue">RowId</th>
                 <th>
                     @Html.DisplayNameFor(model => model.PostgresTable[0].Host)
                 </th>
@@ -34,7 +34,7 @@
                 {
                     countPost++;
                     <tr>
-                        <td>@countPost</td>
+                        <td style="background-color:lightsteelblue">@countPost</td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Host)
                         </td>
@@ -56,25 +56,27 @@
                 @if (countPost == 0)
                 {
                     <tr>
-                        <td>&emsp;</td>
-                        <td>&emsp;</td>
-                        <td>&emsp;</td>
-                        <td>&emsp;</td>
-                        <td>&emsp;</td>
-                        <td>&emsp;</td>
+                        <td style="background-color:lightsteelblue">0</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 }
             }
         </tbody>
     </table>
+
     <br />
     <hr />
     <br />
+
     <h2>SQLite Active Connection Table</h2>
     <table class="table table-striped table-responsive">
         <thead>
             <tr>
-                <th style="width:50px"></th>
+                <th style="width:50px; background-color:lightsteelblue">RowId</th>
                 <th>
                     @Html.DisplayNameFor(model => model.SqliteTable[0].Path)
                 </th>
@@ -89,7 +91,7 @@
                 {
                     countLite++;
                     <tr>
-                        <td>@countLite</td>
+                        <td style="background-color:lightsteelblue">@countLite</td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Path)
                         </td>
@@ -102,9 +104,9 @@
                 @if (countLite == 0)
                 {
                     <tr>
-                        <td>&emsp;</td>
-                        <td>&emsp;</td>
-                        <td>&emsp;</td>
+                        <td style ="background-color:lightsteelblue">0</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 }
             }
