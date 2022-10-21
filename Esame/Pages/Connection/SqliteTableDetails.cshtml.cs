@@ -85,7 +85,16 @@ namespace Esame.Pages.Connection
             }
             TableValue(Input, name);
             ViewData["Dati"] = Dati;
-            Tableindex(Input, name);
+
+            try
+            {
+                Tableindex(Input, name);
+            }
+            catch
+            {
+                return Page();
+            }
+            
             ViewData["Index"] = Index;
 
             return Page();

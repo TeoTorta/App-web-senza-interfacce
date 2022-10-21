@@ -1,5 +1,4 @@
 ﻿#nullable disable
-using Microsoft.Data.Sqlite;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
