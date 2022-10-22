@@ -13,15 +13,13 @@ namespace Esame.Pages.Connection
 
         public DataTable PostgresTable { get; set; } = new DataTable();
         public DataTable Dati { get; set; } = new DataTable();
-
-        public string TableName { get; set; }
+        public DataTable Index { get; set; } = new DataTable();
         public DataTable References { get; set; } = new DataTable();
+        public string TableName { get; set; }
 
         [BindProperty]
         public PostgresOpenConnection Input { get; set; }
-
         public int contatore { get; set; } = 0;
-
         public IList<string> Pkey { get; set; } = new List<string>();
 
 
@@ -38,6 +36,9 @@ namespace Esame.Pages.Connection
             References.Columns.Add("From", typeof(string));
             References.Columns.Add("To", typeof(string));
             References.Columns.Add("Table", typeof(string));
+
+            Index.Columns.Add("indexname", typeof(string));
+            Index.Columns.Add("indexdef", typeof(String));
         }
 
         public async Task<IActionResult> OnGetAsync(string name, long? id)
@@ -77,6 +78,17 @@ namespace Esame.Pages.Connection
             ViewData["PostgresTable"] = PostgresTable;
             TableValue(Input, name);
             ViewData["Dati"] = Dati;
+
+            try
+            {
+                TableIndex(Input, name);
+            }
+            catch
+            {
+                return Page();
+            }
+
+            ViewData["Index"] = Index;
 
             return Page();
         }
@@ -127,11 +139,6 @@ namespace Esame.Pages.Connection
                 References.Rows.Add(dr3.GetString(3), dr3.GetString(5), dr3.GetString(6));
             }
             dr3.Close();
-
-
-
-
-
         }
 
         public void TableValue(PostgresOpenConnection Input, string name)
@@ -144,9 +151,46 @@ namespace Esame.Pages.Connection
             NpgsqlCommand cmd = new NpgsqlCommand(query, o);
             NpgsqlDataAdapter myAdapter = new NpgsqlDataAdapter(cmd);
             myAdapter.Fill(Dati);
+        }
 
+        public void TableIndex(PostgresOpenConnection Input, string name)
+        {
+            string connectionString = $"Host={Input.Host}; Database={Input.Database}; User ID={Input.UserId}; Password={Input.Password};";
+            NpgsqlConnection o = new NpgsqlConnection(connectionString);
+            o.Open();
 
+            List<String> columnsList = new List<String>();
 
+            foreach (DataRow row in PostgresTable.Rows)
+            {
+                if (row["PK"] != "" || row["PK"] != "")
+                {
+                    columnsList.Add((string)row["Name"]);
+                }
+            }
+
+            string columnString = "(";
+            for (int i = 0; i < columnsList.Count; i++)
+            {
+                if (i == columnsList.Count - 1)
+                {
+                    columnString = columnString + columnsList[i] + ")";
+                }
+                else
+                {
+                    columnString = columnString + columnsList[i] + ", ";
+                }
+
+            }
+
+            string showIndex = $"SELECT indexname, indexdef FROM pg_indexes WHERE tablename = '{TableName}'";
+            NpgsqlCommand cmd4 = new NpgsqlCommand(showIndex, o);
+            var rd = cmd4.ExecuteReader();
+
+            while (rd.Read())
+            {
+                Index.Rows.Add(rd.GetString(0), rd.GetString(1));
+            }
         }
     }
 }

@@ -180,25 +180,22 @@ namespace Esame.Pages.Connection
 
             }
 
-            var cmd = new SqliteCommand("DROP INDEX IF EXISTS idx", o);
-            var cmd2 = new SqliteCommand("CREATE INDEX idx ON " + name + " " + columnString, o);
+            //var cmd = new SqliteCommand("DROP INDEX IF EXISTS idx", o);
+            //var cmd2 = new SqliteCommand("CREATE INDEX idx ON " + name + " " + columnString, o);
             
-            var reader = cmd.ExecuteReader();
-            var reader2 = cmd2.ExecuteReader();
+            //var reader = cmd.ExecuteReader();
+            //var reader2 = cmd2.ExecuteReader();
 
             string query2 = "PRAGMA index_list(" + name + ")";
             
             var cmd3 = new SqliteCommand(query2, o);
             var rd = cmd3.ExecuteReader();
 
-            
             while (rd.Read())
             {
                 Index.Rows.Add(rd.GetString(0),rd.GetString(1),rd.GetString(2), rd.GetString(3), rd.GetString(4));
-            }
-            
+            }    
         }
-
     }
 }
 
