@@ -180,11 +180,11 @@ namespace Esame.Pages.Connection
 
             }
 
-            //var cmd = new SqliteCommand("DROP INDEX IF EXISTS idx", o);
-            //var cmd2 = new SqliteCommand("CREATE INDEX idx ON " + name + " " + columnString, o);
+            var cmd = new SqliteCommand("DROP INDEX IF EXISTS idx", o);
+            var cmd2 = new SqliteCommand("CREATE INDEX idx ON " + name + " " + columnString, o);
             
-            //var reader = cmd.ExecuteReader();
-            //var reader2 = cmd2.ExecuteReader();
+            var reader = cmd.ExecuteReader();
+            var reader2 = cmd2.ExecuteReader();
 
             string query2 = "PRAGMA index_list(" + name + ")";
             

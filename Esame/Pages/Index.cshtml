@@ -31,7 +31,7 @@
 
                     <div class="collapse" style=" background-color: rgb(241, 241, 241)" id="collapseExample-@j">
                         <div class="card card-body" style=" background-color: rgb(241, 241, 241)">
-                            @foreach (var item in @dr[2] as IList<string>)
+                            @foreach (var item in (@dr[2] as IList<string>) ?? Enumerable.Empty<String>())
                             {
                                 <a class="w3-bar-item w3-button" style=" color:blue" asp-page="/Connection/PostgresTableDetails" asp-route-name="@item" asp-route-id="@dr[0]">
                                     @item

@@ -60,7 +60,7 @@ namespace Esame.Pages
             {
                 string connectionString = $"Host={PostgresList[i].Host}; Database={PostgresList[i].Database}; User ID={PostgresList[i].UserId}; Password={PostgresList[i].Password};";
 
-                NpgsqlConnection o = new NpgsqlConnection(connectionString);
+                using NpgsqlConnection o = new NpgsqlConnection(connectionString);
 
                 o.Open();
 
