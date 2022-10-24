@@ -31,7 +31,7 @@
     <div class="col-md-4">
         <form method="post">
             <div class="form-floating">
-                <textarea class="form-control" id="floatingTextarea2" asp-for="statement.query" style="height: 150px; width: 1300px"></textarea>
+                <textarea class="form-control" id="floatingTextarea2" asp-for="Statement.query" style="height: 150px; width: 1300px"></textarea>
             </div>
             <br />
             <div class="form-group">
@@ -42,7 +42,7 @@
 </div>
 
 <div style="width:500px;">
-    <input asp-for="errore" class="text-danger" style="border: none; background-color: transparent; width:500px;" readonly disabled />
+    <input asp-for="Errore" class="text-danger" style="border: none; background-color: transparent; width:500px;" readonly disabled />
     <input asp-for="messaggioOk" style="border: none; background-color: transparent; width:500px;" readonly disabled />
 </div>
 
@@ -55,7 +55,7 @@
             if (dt != null)
             {
 
-                @foreach (var item in Model.columns)
+                @foreach (var item in Model.Columns)
                 {
                     <th>
                         @item
@@ -75,7 +75,7 @@
             {
 
                 <tr>
-                    @for (var i = 0; i < Model.contatore; i++)
+                    @for (var i = 0; i < Model.Contatore; i++)
                     {
                         <td>
                             @myRow[i]

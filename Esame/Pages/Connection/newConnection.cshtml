@@ -7,25 +7,25 @@
     <h1>Select the DB Provider</h1>
     <hr />
     <h3>
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post">
-                <div class="form-group">
-                    <input type="radio" value="SQLite" asp-for="Input.provider" checked>
-                    <label for="SQLite">SQLite</label>
-                </div>
-                <br />
-                <div class="form-group">
-                    <input type="radio" value="PostgreSQL" asp-for="Input.provider">
-                    <label for="PostgreSQL">PostgreSQL</label><br>
-                </div>
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div class="form-group">
+                        <input type="radio" value="SQLite" asp-for="Input.provider" checked>
+                        <label for="SQLite">SQLite</label>
+                    </div>
                     <br />
-                <div class="form-group">
-                    <input type="submit" value="Go" class="btn btn-primary" />
-                </div>
-            </form>
+                    <div class="form-group">
+                        <input type="radio" value="PostgreSQL" asp-for="Input.provider">
+                        <label for="PostgreSQL">PostgreSQL</label><br>
+                    </div>
+                        <br />
+                    <div class="form-group">
+                        <input type="submit" value="Go" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
     </h3>
 </div>
 
