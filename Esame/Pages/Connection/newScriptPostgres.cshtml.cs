@@ -12,15 +12,14 @@ namespace Esame.Pages.Connection
         private readonly ConnectionContext _context;
 
         [BindProperty]
-        public Query statement { get; set; } = default;
-        public String stringa { get; set; }
-        public string errore { get; set; }
+        public Query Statement { get; set; } = default;
+        public string Errore { get; set; }
 
         public DataTable PostgresTable { get; set; } = new DataTable();
 
-        public int contatore = 0;
+        public int Contatore = 0;
 
-        public List<string> columns { get; set; } = new List<string>();
+        public List<string> Columns { get; set; } = new List<string>();
         public string messaggioOk { get; set; }
         public DataTable Dati { get; set; } = new DataTable();
 
@@ -57,7 +56,7 @@ namespace Esame.Pages.Connection
 
             o.Open();
 
-            var cmd = new NpgsqlCommand(statement.query, o);
+            var cmd = new NpgsqlCommand(Statement.query, o);
 
             try
             {
@@ -72,30 +71,30 @@ namespace Esame.Pages.Connection
                 }
                 else
                 {
-                    if(columns.Count > 0)
+                    if(Columns.Count > 0)
                     {
-                        columns.Clear();
+                        Columns.Clear();
                     }
 
                     NpgsqlConnection o2 = new NpgsqlConnection(connectionString);
 
                     o2.Open();
 
-                    var cmd2 = new NpgsqlCommand(statement.query, o2);
+                    var cmd2 = new NpgsqlCommand(Statement.query, o2);
 
                     var reader = cmd2.ExecuteReader();
 
-                    columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).ToList();
+                    Columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).ToList();
                 }
             }
             catch(Exception e)
             {
-                errore = e.Message;
+                Errore = e.Message;
             }
 
             ViewData["Dati"] = Dati;
             ViewData["PostgresTable"] = PostgresTable;
-            contatore = Dati.Columns.Count;
+            Contatore = Dati.Columns.Count;
 
             return Page();
         }

@@ -19,7 +19,7 @@ namespace Esame.Pages.Connection
 
         [BindProperty]
         public PostgresOpenConnection Input { get; set; }
-        public int contatore { get; set; } = 0;
+        public int Contatore { get; set; } = 0;
         public IList<string> Pkey { get; set; } = new List<string>();
 
 
@@ -72,7 +72,7 @@ namespace Esame.Pages.Connection
                         r["FK"] = $"({rf["from"]}) REFERENCES {rf["To"]} ({rf["Table"]})";
                     }
                 }
-                contatore++;
+                Contatore++;
                 
             }
             ViewData["PostgresTable"] = PostgresTable;
@@ -163,7 +163,7 @@ namespace Esame.Pages.Connection
 
             foreach (DataRow row in PostgresTable.Rows)
             {
-                if (row["PK"] != "" || row["PK"] != "")
+                if (row["PK"] is not (object)"" or not (object)"")
                 {
                     columnsList.Add((string)row["Name"]);
                 }

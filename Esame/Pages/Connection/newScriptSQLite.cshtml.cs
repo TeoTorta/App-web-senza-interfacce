@@ -19,14 +19,14 @@ namespace Esame.Pages.Connection
         private readonly ConnectionContext _context;
 
         [BindProperty]
-        public Query statement { get; set; }
-        public string errore { get; set; }
+        public Query Statement { get; set; }
+        public string Errore { get; set; }
 
         public string messaggioOk{ get; set; }
 
-        public int contatore = 0;
+        public int Contatore = 0;
 
-        public List<string> columns { get; set; }= new List<string>();
+        public List<string> Columns { get; set; }= new List<string>();
 
         [BindProperty]
         public static SqliteOpenConnection Input { get; set; }
@@ -62,15 +62,15 @@ namespace Esame.Pages.Connection
 
             string connectionString = $"Data Source={Input.Path}";
             
-            SQLiteConnection o = new SQLiteConnection(connectionString);
+            SQLiteConnection o = new(connectionString);
 
             o.Open();
 
-            var cmd = new SQLiteCommand(statement.query, o);
+            var cmd = new SQLiteCommand(Statement.query, o);
 
             try
             {
-                SQLiteDataAdapter myAdapter = new SQLiteDataAdapter(cmd);
+                SQLiteDataAdapter myAdapter = new(cmd);
 
                 var count=myAdapter.Fill(Dati);
 
@@ -83,31 +83,31 @@ namespace Esame.Pages.Connection
                 else
                 {
 
-                    if(columns.Count>0)
+                    if(Columns.Count>0)
                     {
-                        columns.Clear();
+                        Columns.Clear();
                     }
-                    SqliteConnection o2 = new SqliteConnection(connectionString);
+                    SqliteConnection o2 = new(connectionString);
 
                     o2.Open();
 
-                    var cmd2 = new SqliteCommand(statement.query, o2);
+                    var cmd2 = new SqliteCommand(Statement.query, o2);
 
                     var reader = cmd2.ExecuteReader();
 
-                    columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).ToList();
+                    Columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).ToList();
                 }            
 
             }
             catch(Exception ex)
             {
 
-                errore = ex.Message;
+                Errore = ex.Message;
             }
 
             ViewData["Dati"] = Dati;
             ViewData["SqliteTable"] = SqliteTable;
-            contatore = Dati.Columns.Count;
+            Contatore = Dati.Columns.Count;
             return Page();
         }
     }

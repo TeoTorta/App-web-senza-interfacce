@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.Sqlite;
 using System.Data;
 using System.Data.SQLite;
-using System.Xml;
-using System.Xml.Linq;
-
 
 namespace Esame.Pages.Connection
 {
@@ -26,9 +23,9 @@ namespace Esame.Pages.Connection
 
         [BindProperty]
         public SqliteOpenConnection Input { get; set; }
-        public int contatore = 0;
+
+        public int Contatore = 0;
         public string TableName { get; set; }
-        public List<string> nomi { get; set; } = new List<string>();
 
         public SqliteTableDetailsModel(ConnectionContext context)
         {
@@ -72,7 +69,7 @@ namespace Esame.Pages.Connection
             
             foreach (DataRow r in SqliteTable.Rows)
             {
-                contatore++;
+                Contatore++;
 
                 foreach (DataRow rf in References.Rows)
                 {
@@ -119,7 +116,7 @@ namespace Esame.Pages.Connection
                     NullorNot = "NOT NULL";
                 }
 
-                int value = Int32.Parse(dr.GetString(5));
+                int value = int.Parse(dr.GetString(5));
                 
                 var primaryKey = "";
                 if (value>0)
@@ -160,7 +157,7 @@ namespace Esame.Pages.Connection
             List<string> columnList = new List<string>();
             foreach (DataRow r in SqliteTable.Rows)
             {
-                if (r["PK"] != "" || r["PK"] != "")
+                if (r["PK"] is not (object)"" or not (object)"")
                 {
                     columnList.Add((string)r["Name"]);
                 }

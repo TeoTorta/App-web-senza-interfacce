@@ -58,7 +58,7 @@
                     {
                         <th>
                             @item
-                            </th>
+                        </th>
                     }
                     
                 }
@@ -68,18 +68,21 @@
     @if (ViewData["Dati"] != null)
     {
         var dt2 = ViewData["Dati"] as System.Data.DataTable;
+
+        if(dt2 != null){ 
     
-        foreach (System.Data.DataRow myRow in dt2.Rows)
-        {
+            foreach (System.Data.DataRow myRow in dt2.Rows)
+            {
         
-            <tr>
+                <tr>
                     @for (var i = 0; i < Model.contatore; i++)
                     {
                     <td>
                             @myRow[i]
                     </td>
                     }
-            </tr>
+                </tr>
+            }
         }
     }
 </table>
