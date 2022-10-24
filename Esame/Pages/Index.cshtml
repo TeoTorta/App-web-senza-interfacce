@@ -14,10 +14,10 @@
     @if (ViewData["PostgresTable"] != null)
     {
         var dt = ViewData["PostgresTable"] as System.Data.DataTable;
-
+        var j = 0;
         foreach (System.Data.DataRow dr in dt.Rows)
         {
-
+            j++;
             <h4> @dr[1] </h4>
              <ul>
                 <li>
@@ -25,11 +25,11 @@
                 </li>
 
                 <li>
-                    <a class="w3-bar-item w3-button" data-bs-toggle="collapse" style="color:blue" href="#collapseExample" role="button" aria-controls="collapseExample" id = "postgres">
+                    <a class="w3-bar-item w3-button" data-bs-toggle="collapse" style="color:blue" href="#collapseExample-@j" role="button" aria-controls="collapseExample" id = "postgres">
                         Tables
                     </a>
 
-                    <div class="collapse" style=" background-color: rgb(241, 241, 241)" id="collapseExample">
+                    <div class="collapse" style=" background-color: rgb(241, 241, 241)" id="collapseExample-@j">
                         <div class="card card-body" style=" background-color: rgb(241, 241, 241)">
                             @foreach (var item in @dr[2] as IList<string>)
                             {
@@ -48,10 +48,10 @@
     @if (ViewData["SqliteTable"] != null)
     {
         var dt2 = ViewData["SqliteTable"] as System.Data.DataTable;
-
+        var i = 0;
         foreach (System.Data.DataRow dr in dt2.Rows)
         {
-
+            i++;
             <h4> @dr[1] </h4>
             <ul>
                 <li>
@@ -59,11 +59,11 @@
                 </li>
 
                 <li>
-                    <a class="w3-bar-item w3-button" data-bs-toggle="collapse" style="color:blue" href="#collapseExample1" role="button" aria-controls="collapseExample">
+                    <a class="w3-bar-item w3-button" data-bs-toggle="collapse" href="#collapseExample-@i" role="button" aria-controls="collapseExample" style="color:blue">
                         Tables
                     </a>
 
-                    <div class="collapse" style=" background-color: rgb(241, 241, 241)" id="collapseExample1">
+                    <div class="collapse" style=" background-color: rgb(241, 241, 241)" id="collapseExample-@i">
                         <div class="card card-body" style=" background-color: rgb(241, 241, 241)">
                             @foreach (var item in @dr[2] as IList<string>)
                             {
