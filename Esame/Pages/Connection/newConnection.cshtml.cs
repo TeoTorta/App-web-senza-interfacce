@@ -10,7 +10,6 @@ namespace Esame.Pages
         [BindProperty]
         public Provider Input { get; set; }
 
-        
         public void OnGet()
         {
 

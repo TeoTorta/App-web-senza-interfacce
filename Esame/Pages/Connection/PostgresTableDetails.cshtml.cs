@@ -96,7 +96,7 @@ namespace Esame.Pages.Connection
         public void TableColumns(PostgresOpenConnection Input, string name)
         {
             string connectionString = $"Host={Input.Host}; Database={Input.Database}; User ID={Input.UserId}; Password={Input.Password};";
-            NpgsqlConnection o = new NpgsqlConnection(connectionString);
+            using NpgsqlConnection o = new NpgsqlConnection(connectionString);
             o.Open();
             NpgsqlCommand cmd = new NpgsqlCommand($"SELECT ordinal_position, column_name, data_type, is_nullable  FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '{name}'", o);
 
@@ -144,7 +144,7 @@ namespace Esame.Pages.Connection
         public void TableValue(PostgresOpenConnection Input, string name)
         {
             string connectionString = $"Host={Input.Host}; Database={Input.Database}; User ID={Input.UserId}; Password={Input.Password};";
-            NpgsqlConnection o = new NpgsqlConnection(connectionString);
+            using NpgsqlConnection o = new NpgsqlConnection(connectionString);
             o.Open();
             
             string query = "SELECT * FROM \""+name+"\" ";
@@ -156,7 +156,7 @@ namespace Esame.Pages.Connection
         public void TableIndex(PostgresOpenConnection Input, string name)
         {
             string connectionString = $"Host={Input.Host}; Database={Input.Database}; User ID={Input.UserId}; Password={Input.Password};";
-            NpgsqlConnection o = new NpgsqlConnection(connectionString);
+            using NpgsqlConnection o = new NpgsqlConnection(connectionString);
             o.Open();
 
             List<String> columnsList = new List<String>();

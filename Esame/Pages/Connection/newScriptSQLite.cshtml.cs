@@ -35,6 +35,8 @@ namespace Esame.Pages.Connection
 
         public DataTable SqliteTable { get; set; } = new DataTable();
 
+        public string DBName { get; set; }
+
         public newScriptSQLiteModel(ConnectionContext context)
         {
             _context = context;
@@ -48,12 +50,24 @@ namespace Esame.Pages.Connection
                 return NotFound();
             }
             Input = await _context.SqliteOpenConnections.FirstOrDefaultAsync(m => m.Id == id);
+            
 
             if (Input == null)
             {
                 return NotFound();
             }
-            
+
+            string connectionString = $"Data Source={Input.Path}";
+
+            SqliteConnection o = new(connectionString);
+
+            o.Open();
+
+            DBName = Path.GetFileName(o.DataSource);
+
+            o.Close();
+
+
             return Page();
         }
 
@@ -65,6 +79,8 @@ namespace Esame.Pages.Connection
             SQLiteConnection o = new(connectionString);
 
             o.Open();
+
+
 
             var cmd = new SQLiteCommand(Statement.query, o);
 
@@ -90,6 +106,8 @@ namespace Esame.Pages.Connection
                     SqliteConnection o2 = new(connectionString);
 
                     o2.Open();
+
+                    
 
                     var cmd2 = new SqliteCommand(Statement.query, o2);
 

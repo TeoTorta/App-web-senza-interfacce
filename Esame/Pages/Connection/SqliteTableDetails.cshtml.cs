@@ -100,7 +100,7 @@ namespace Esame.Pages.Connection
         public void TableColumns(SqliteOpenConnection Input, string name)
         {
             string connectionString = $"Data Source={Input.Path}";
-            SqliteConnection o = new SqliteConnection(connectionString);
+            using SqliteConnection o = new SqliteConnection(connectionString);
             o.Open();
             var cmd = new SqliteCommand("PRAGMA table_info(" + name + ")", o);
             var dr = cmd.ExecuteReader();
@@ -139,7 +139,7 @@ namespace Esame.Pages.Connection
         public void TableValue(SqliteOpenConnection Input, string name)
         {
             string connectionString = $"Data Source={Input.Path}";
-            SQLiteConnection o = new SQLiteConnection(connectionString);
+            using SQLiteConnection o = new SQLiteConnection(connectionString);
             o.Open();
             string query = "SELECT * FROM " + name;
             SQLiteCommand cmd = new SQLiteCommand(query,o);

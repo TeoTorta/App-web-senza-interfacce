@@ -71,7 +71,7 @@ namespace Esame.Pages.Connection
         static bool TestConnectionString(string connectionString)
         {
 
-            var conn = new NpgsqlConnection(connectionString);
+            using NpgsqlConnection conn = new NpgsqlConnection(connectionString);
             try
             {
                 

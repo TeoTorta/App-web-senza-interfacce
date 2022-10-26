@@ -22,6 +22,8 @@ namespace Esame.Pages.Connection
         public List<string> Columns { get; set; } = new List<string>();
         public string messaggioOk { get; set; }
         public DataTable Dati { get; set; } = new DataTable();
+        public string DBName { get; set; }
+
 
         public newScriptPostgresModel(ConnectionContext context)
         {
@@ -39,6 +41,8 @@ namespace Esame.Pages.Connection
                 return NotFound();
             }
             Input = await _context.PostgresOpenConnections.FirstOrDefaultAsync(m => m.Id == id);
+
+            DBName = Input.Database;
 
             if (Input == null)
             {

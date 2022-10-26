@@ -70,7 +70,7 @@ namespace Esame.Pages.Connection
 
             try
             {
-                var conn = new SqliteConnection(connectionString);
+                using SqliteConnection conn = new SqliteConnection(connectionString);
 
 
                 if (!System.IO.File.Exists(path))
