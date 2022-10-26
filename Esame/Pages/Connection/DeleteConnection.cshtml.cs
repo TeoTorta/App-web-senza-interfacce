@@ -7,12 +7,14 @@ namespace Esame.Pages.Connection
     public class DeleteConnectionModel : PageModel
     {
         private readonly ConnectionContext _context;
+        public IList<PostgresOpenConnection> PostgresTable { get; set; }
+        public IList<SqliteOpenConnection> SqliteTable { get; set; }
+
+
         public DeleteConnectionModel(ConnectionContext context)
         {
             _context = context;
         }
-        public IList<PostgresOpenConnection> PostgresTable { get; set; }
-        public IList<SqliteOpenConnection> SqliteTable { get; set; }
 
         public async Task OnGetAsync()
         {

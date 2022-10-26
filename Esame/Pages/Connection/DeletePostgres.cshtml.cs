@@ -8,13 +8,13 @@ namespace Esame.Pages.Connection
     {
         private readonly ConnectionContext _context;
 
+        [BindProperty]
+        public PostgresOpenConnection Input { get; set; }
+
         public DeletePostgresModel(ConnectionContext context)
         {
             _context = context;
         }
-
-        [BindProperty]
-        public PostgresOpenConnection Input { get; set; }
        
 
         public async Task<IActionResult> OnGetAsync(long? id)

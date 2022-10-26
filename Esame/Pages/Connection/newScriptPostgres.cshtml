@@ -9,7 +9,7 @@
 
     <script>
         $(document).ready(function () {
-            let msg = $('#errore').val();
+            let msg = $('#Errore').val();
             if (msg.length > 0) {
                 swal.fire(msg);
             }
@@ -43,7 +43,7 @@
 
 <div style="width:500px;">
     <input asp-for="Errore" class="text-danger" style="border: none; background-color: transparent; width:500px;" readonly disabled />
-    <input asp-for="messaggioOk" style="border: none; background-color: transparent; width:500px;" readonly disabled />
+    <input asp-for="MessaggioOk" style="border: none; background-color: transparent; width:500px;" readonly disabled />
 </div>
 
     <table class="table table-striped table-responsive">

@@ -22,7 +22,7 @@ namespace Esame.Pages.Connection
         public Query Statement { get; set; }
         public string Errore { get; set; }
 
-        public string messaggioOk{ get; set; }
+        public string MessaggioOk{ get; set; }
 
         public int Contatore = 0;
 
@@ -94,7 +94,7 @@ namespace Esame.Pages.Connection
 
                 if (count==0)
                 {
-                    messaggioOk = "Query run successfully on Database";
+                    MessaggioOk = "Query run successfully on Database";
                 }
                 else
                 {

@@ -19,10 +19,6 @@ namespace Esame.Pages.Connection
 
         public IList<SqliteOpenConnection> SqliteTable { get; set; }
 
-
-        public SqliteConnection Connection { get; set; }
-
-
         public FormSQLiteModel(ConnectionContext context)
         {
             _context = context;
@@ -49,7 +45,6 @@ namespace Esame.Pages.Connection
                     if (SqliteTable[i].Path.Equals(Input.Path))
                     {
                         StatusMessage = "I dati sono già stati inseriti nel database!";
-                        Connection.Close();
                         return Page();
                     }
                 }

@@ -16,11 +16,8 @@ namespace Esame.Pages.Connection
         public string Connect { get; set; } = default!;
 
         public string StatusMessage { get; set; }
-
-
         public IList<PostgresOpenConnection> PostgresTable { get; set; }
        
-        public NpgsqlConnection connection { get; set; }
 
         public FormPostgresModel(ConnectionContext context)
         {

@@ -11,14 +11,14 @@ namespace Esame.Pages.Connection
     {
         private readonly ConnectionContext _context;
 
+        [BindProperty]
+        public SqliteOpenConnection Input { get; set; }
+
+
         public DeleteSqliteModel(ConnectionContext context)
         {
             _context = context;
         }
-
-        [BindProperty]
-        public SqliteOpenConnection Input { get; set; }
-
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {

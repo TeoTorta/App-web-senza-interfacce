@@ -20,7 +20,7 @@ namespace Esame.Pages.Connection
         public int Contatore = 0;
 
         public List<string> Columns { get; set; } = new List<string>();
-        public string messaggioOk { get; set; }
+        public string MessaggioOk { get; set; }
         public DataTable Dati { get; set; } = new DataTable();
         public string DBName { get; set; }
 
@@ -71,7 +71,7 @@ namespace Esame.Pages.Connection
 
                 if(count == 0)
                 {
-                    messaggioOk = "Query run successfully on Database";
+                    MessaggioOk = "Query run successfully on Database";
                 }
                 else
                 {
