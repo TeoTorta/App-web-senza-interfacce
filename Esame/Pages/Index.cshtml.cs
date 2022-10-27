@@ -24,6 +24,9 @@ namespace Esame.Pages
         public IList<SqliteOpenConnection> SqliteList { get; set; }
 
 
+        [BindProperty]
+        public Provider Input { get; set; }
+
         public IndexModel(ConnectionContext context)
         {
             _context = context;
@@ -52,6 +55,23 @@ namespace Esame.Pages
                 ViewData["SqliteTable"] = SqliteTable;
             }
 
+        }
+
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            if (Input.provider.Equals(DbProvider.SQLite))
+            {
+                return RedirectToPage("./Connection/FormSQLite");
+            }
+            else
+            {
+                return RedirectToPage("./Connection/FormPostgres");
+            }
         }
 
         public void GetTabellePostgres()
