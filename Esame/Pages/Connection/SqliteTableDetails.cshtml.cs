@@ -12,7 +12,6 @@ namespace Esame.Pages.Connection
 
         private readonly ConnectionContext _context;
 
-        
         public DataTable SqliteTable { get; set; } = new DataTable();
 
         public DataTable Dati { get; set; } = new DataTable();

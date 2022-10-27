@@ -26,6 +26,10 @@
     </script>
 }
 
+
+<partial name="BarraLaterale" />
+
+
 <h1> Database: @Model.DBName </h1>
 <div class="row">
     <div class="col-md-4">
@@ -47,9 +51,9 @@
     
 <table class="table table-striped table-responsive">
             <tr>
-            @if (ViewData["SqliteTable"] != null)
+            @if (ViewData["Table"] != null)
             {
-                var dt = ViewData["SqliteTable"] as System.Data.DataTable;
+                var dt = ViewData["Table"] as System.Data.DataTable;
 
                 if (dt != null)
                 {

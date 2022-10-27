@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Npgsql;
 using Npgsql.Internal.TypeHandlers;
 using System.Data;
 using System.Data.SQLite;
@@ -33,14 +34,27 @@ namespace Esame.Pages.Connection
 
         public DataTable Dati { get; set; } = new DataTable();
 
+        public DataTable Table { get; set; } = new DataTable();
+
+        public DataTable PostgresTable { get; set; } = new DataTable();
+
         public DataTable SqliteTable { get; set; } = new DataTable();
+
+        public IList<PostgresOpenConnection> PostgresList { get; set; }
+        public IList<SqliteOpenConnection> SqliteList { get; set; }
 
         public string DBName { get; set; }
 
         public newScriptSQLiteModel(ConnectionContext context)
         {
             _context = context;
-          
+            PostgresTable.Columns.Add("Id", typeof(long));
+            PostgresTable.Columns.Add("Database", typeof(string));
+            PostgresTable.Columns.Add("Tabelle", typeof(IList<string>));
+            SqliteTable.Columns.Add("Id", typeof(long));
+            SqliteTable.Columns.Add("Database", typeof(string));
+            SqliteTable.Columns.Add("Tabelle", typeof(IList<string>));
+
         }
 
         public async Task<IActionResult> OnGetAsync(long? id)
@@ -60,23 +74,36 @@ namespace Esame.Pages.Connection
             string connectionString = $"Data Source={Input.Path}";
 
             SqliteConnection o = new(connectionString);
-
             o.Open();
-
             DBName = Path.GetFileName(o.DataSource);
-
             o.Close();
+
+
+            PostgresList = await _context.PostgresOpenConnections.ToListAsync();
+            Console.WriteLine(PostgresList.Count);
+            if (PostgresList.Count > 0)
+            {
+                GetTabellePostgres();
+                ViewData["PostgresTable"] = PostgresTable;
+            }
+
+            SqliteList = await _context.SqliteOpenConnections.ToListAsync();
+            if (SqliteList.Count > 0)
+            {
+                GetTabelleSqlite();
+                ViewData["SqliteTable"] = SqliteTable;
+            }
 
 
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
 
             string connectionString = $"Data Source={Input.Path}";
             
-            SQLiteConnection o = new(connectionString);
+            using SQLiteConnection o = new(connectionString);
 
             o.Open();
 
@@ -103,7 +130,7 @@ namespace Esame.Pages.Connection
                     {
                         Columns.Clear();
                     }
-                    SqliteConnection o2 = new(connectionString);
+                    using SqliteConnection o2 = new(connectionString);
 
                     o2.Open();
 
@@ -124,9 +151,80 @@ namespace Esame.Pages.Connection
             }
 
             ViewData["Dati"] = Dati;
-            ViewData["SqliteTable"] = SqliteTable;
+            ViewData["Table"] = Table;
             Contatore = Dati.Columns.Count;
+
+            PostgresList = await _context.PostgresOpenConnections.ToListAsync();
+            if (PostgresList.Count > 0)
+            {
+                GetTabellePostgres();
+                ViewData["PostgresTable"] = PostgresTable;
+            }
+
+            SqliteList = await _context.SqliteOpenConnections.ToListAsync();
+            if (SqliteList.Count > 0)
+            {
+                GetTabelleSqlite();
+                ViewData["SqliteTable"] = SqliteTable;
+            }
             return Page();
+        }
+        public void GetTabellePostgres()
+        {
+            for (int i = 0; i < PostgresList.Count; i++)
+            {
+                string connectionString = $"Host={PostgresList[i].Host}; Database={PostgresList[i].Database}; User ID={PostgresList[i].UserId}; Password={PostgresList[i].Password};";
+
+                using NpgsqlConnection o = new NpgsqlConnection(connectionString);
+
+                o.Open();
+
+                IList<String> tabelle = new List<String>();
+
+                var sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'";
+
+                using var cmd = new NpgsqlCommand(sql, o);
+
+                using NpgsqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    tabelle.Add(rdr.GetString(0));
+                }
+
+                string result = Path.GetFileName(o.Database);
+
+                PostgresTable.Rows.Add(PostgresList[i].Id, result, tabelle);
+            }
+        }
+
+        public void GetTabelleSqlite()
+        {
+            for (int i = 0; i < SqliteList.Count; i++)
+            {
+                string connectionString = $"Data Source={SqliteList[i].Path}";
+
+                using SqliteConnection o = new SqliteConnection(connectionString);
+
+                o.Open();
+
+                IList<String> tabelle = new List<String>();
+
+                var sql = "SELECT name FROM sqlite_master WHERE type='table'";
+
+                using var cmd = new SqliteCommand(sql, o);
+
+                using SqliteDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    tabelle.Add(rdr.GetString(0));
+                }
+                string result = Path.GetFileName(o.DataSource);
+
+                SqliteTable.Rows.Add(SqliteList[i].Id, result, tabelle);
+            }
         }
     }
 }
+
