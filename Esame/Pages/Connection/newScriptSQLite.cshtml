@@ -30,12 +30,13 @@
 <partial name="BarraLaterale" />
 
 
-<h1> Database: @Model.DBName </h1>
-<div class="row">
+
+<div class="row" style="margin-left:25%">
+    <h1> Database: @Model.DBName </h1>
     <div class="col-md-4">
         <form method="post">
             <div class="form-floating">
-                <textarea class="form-control" id="floatingTextarea2" asp-for="Statement.query" style="height: 150px; width: 1300px"></textarea>
+                <textarea class="form-control" id="floatingTextarea2" asp-for="Statement.query" style="height: 150px; width: 750px"></textarea>
             </div>
             <br />
             <div class="form-group">
