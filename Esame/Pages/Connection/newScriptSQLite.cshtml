@@ -36,7 +36,7 @@
     <div class="col-md-4">
         <form method="post">
             <div class="form-floating">
-                <textarea class="form-control" id="floatingTextarea2" asp-for="Statement.query" style="height: 150px; width: 750px"></textarea>
+                <textarea class="form-control" id="floatingTextarea2" asp-for="Statement.query" style="height: 150px; width: 900px"></textarea>
             </div>
             <br />
             <div class="form-group">
@@ -45,12 +45,12 @@
         </form>
     </div>
 </div>
-    <div style="width:500px;">
+    <div style="width:500px; margin-left:26%">
         <input asp-for="Errore" class="text-danger" style="border: none; background-color: transparent; width:500px;" readonly disabled />
         <input asp-for="MessaggioOk" style="border: none; background-color: transparent; width:500px;" readonly disabled />
     </div>
     
-<table class="table table-striped table-responsive">
+    <table class="table table-striped table-responsive" style="margin-left:26%; max-width:900px">
             <tr>
             @if (ViewData["Table"] != null)
             {

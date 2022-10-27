@@ -47,7 +47,7 @@ namespace Esame.Pages.Connection
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./ViewConnection");
+            return RedirectToPage("./DeleteConnection");
         }
     }
 }
