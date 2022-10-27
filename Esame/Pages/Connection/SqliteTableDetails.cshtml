@@ -19,7 +19,7 @@
 
                 if(dt != null)
                 {
-                    <th style="width:50px; background-color:lightsteelblue">RowId</th>
+                    <th style="width:50px; background-color:lightgrey">RowId</th>
                     foreach (System.Data.DataRow dr in dt.Rows)
                     {
                         
@@ -42,7 +42,7 @@
                 {
                     r++;
                     <tr>
-                        <td style="background-color:lightsteelblue">@r</td>
+                        <td style="background-color:lightgrey">@r</td>
                         @for (var i = 0; i < Model.Contatore; i++)
                         {
                             <td>
@@ -56,7 +56,7 @@
                 if (r == 0)
                 {
                     <tr>
-                        <td style="background-color:lightsteelblue">0</td>
+                        <td style="background-color:lightgrey">0</td>
                         @for (var i = 0; i < Model.Contatore; i++)
                         {
                             <td></td>
